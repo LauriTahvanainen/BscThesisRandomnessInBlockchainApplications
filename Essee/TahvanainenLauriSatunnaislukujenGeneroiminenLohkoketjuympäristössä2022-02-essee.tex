@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\title{ Satunnaislukujen generoiminen lohkoketjuympäristössä \\\small{Essay}}
+\author{Lauri Tahvanainen}
+
+\begin{document}
+\maketitle
+
+Satunnaisuuden generoiminen on kriittinen ongelma monissa hajautetuissa järjestelmissä ja satunnaisuuden generointia on kuvailtu yhdeksi tärkeimmistä virtuaalivaluuttojen kohtaamista teknisistä ongelmista. \cite{noauthor_hpoc_2015_nodate}. Luotettavalla satunnaislukujen generoimisen protokollalla on lohkoketjuympäristössä sovelluksia niin ketjun konsensusprotokollan tasolla, kuin ketjun sovellustasolla. Konsensusprotokollan tasolla satunnaisuutta käytetään esimerkiksi uusien lohkojen valitsijan valintaan \cite{chen_algorand_2017}. Lohkoketjun sovellustasolla satunnaisuutta vaaditaan esimerkiksi hajautettuja lottoarvontoja toteuttavassa sovelluksessa \cite{pooltogether_pooltogether_nodate} tai tuomarien valinnassa hajautetun tuomioistuimen toteuttavassa sovelluksessa \cite{lesaege_kleros_2020}. 
+
+Lohkoketjun lupavapaa luonne, jossa jokainen osallistuja on mahdollisesti vahingollinen toimija, vaatii satunnaislukujen generoimisen protokollan olevan hajautettu, manipuloimaton, ennustamaton, julkinen ja vahvistettavissa. Hajautettu tarkoittaa tässä yhteydessä lupavapautta, eli kuka tahansa käyttäjä voi olla osallistujana satunnaisluvun generoimiseen. Manipuloimattomuudella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi vaikuttaa satunnaisluvun generoimiseen. Ennustamisella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi ennustaa generoitavaa lukua. Julkisuudella ja vahvistettavuudella tarkoitetaan sitä, että satunnaisluvun generoimisen protokollan eteneminen on kaikkien käyttäjien nähtävissä, ja generoidun satunnaisluvun kohdalla voidaan tarkistaa, että se on generoitu tätä protokollaa käyttäen.
+
+Tässä tapauksessa satunnaislukujen generoimisen ongelma rajataan tarkemmin seuraavasti:
+Yhden satunnaisluvun generoimiseen osallistuu N osallistujaa,  N $>$ 1. Lohkoketjuympäristössä jokaisella osallistujalla on lohkoketjussa käytettävän asymmetrisen salausmenetelmän tuottamat julkinen avain P ja yksityinen avain S. Kuka tahansa voi liittyä generointiprotokollaan ennen protokollan suorittamisen aloittamista, mutta uusia osallistujia ei voi liittyä kesken protokollan suorittamisen. Tämä tilanne vastaa monen sovelluksen käyttötapausta, kuten esimerkiksi lottoarvonnan. Kun arvonta alkaa, ei uusia osallistuja voi enää liittyä. Tilanne voi vastata myös konsensusmekanismin vaihetta, jossa seuraavan lohkon tuottaja valitaan satunnaisesti valinnan aloittaessa lukittavasta joukosta osallistujia. Generoitu satunnaisluku julkaistaan lohkoketjuun. 
+
+Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset \cite{simic_review_2020}:
+\begin{itemize}
+    \item[--] V1: Protokollan generoimat satunnaisluvut noudattavat satunnaisjakaumaa
+    \item[--] V2: Protokollan generoimia satunnaislukuja ei voi ennustaa
+    \item[--] V3: On todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
+    \item[--] V4: Generoitava satunnaisluku ei ole kenenkään manipuloitavissa
+\end{itemize}
+Käyttötarkoituksesta riippuen voidaan vaatia, että:
+
+\begin{itemize}
+    \item[--] V5: Jos protokollaa suorittaa vähintään 1 rehellinen osallistuja, ei protokollaa voi estää generoimasta satunnaislukua.
+    \item[--] V6: Protokollan suorittamiseen kuluu aikaa enintään t.
+\end{itemize}
+
+Käydään läpi olemassaolevia protokollia satunnaislukujen generoimiseen lohkoketjusovelluksen näkökulmasta. 
+
+Monet lohkoketjusovellukset eivät toteuta omaa protokollaa satunnaislukujen generoimiseen, vaan käyttävät ulkoista satunnaislukujen lähdettä. Yleisin näistä on lohkon hajautusarvon käyttäminen siemenenä?! pseudo-satunnaisen funktion syötteenä. Lohkon hajautusarvo täyttää vaatimukset 1-3, mutta lohkon louhijat voivat vaikuttaa arvoon.
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+\end{document}
