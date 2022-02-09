@@ -1,35 +1,60 @@
 \documentclass{article}
 
-\title{ Satunnaislukujen generoiminen lohkoketjuympäristössä \\\small{Essay}}
+\title{ Satunnaislukujen generoiminen lohkoketjusovelluksissa \\\small{Essay}}
 \author{Lauri Tahvanainen}
 
 \begin{document}
 \maketitle
 
+\section{Johdanto}
+
 Satunnaisuuden generoiminen on kriittinen ongelma monissa hajautetuissa järjestelmissä ja satunnaisuuden generointia on kuvailtu yhdeksi tärkeimmistä virtuaalivaluuttojen kohtaamista teknisistä ongelmista. \cite{noauthor_hpoc_2015_nodate}. Luotettavalla satunnaislukujen generoimisen protokollalla on lohkoketjuympäristössä sovelluksia niin ketjun konsensusprotokollan tasolla, kuin ketjun sovellustasolla. Konsensusprotokollan tasolla satunnaisuutta käytetään esimerkiksi uusien lohkojen valitsijan valintaan \cite{chen_algorand_2017}. Lohkoketjun sovellustasolla satunnaisuutta vaaditaan esimerkiksi hajautettuja lottoarvontoja toteuttavassa sovelluksessa \cite{pooltogether_pooltogether_nodate} tai tuomarien valinnassa hajautetun tuomioistuimen toteuttavassa sovelluksessa \cite{lesaege_kleros_2020}. 
 
-Lohkoketjun lupavapaa luonne, jossa jokainen osallistuja on mahdollisesti vahingollinen toimija, vaatii satunnaislukujen generoimisen protokollan olevan hajautettu, manipuloimaton, ennustamaton, julkinen ja vahvistettavissa. Hajautettu tarkoittaa tässä yhteydessä lupavapautta, eli kuka tahansa käyttäjä voi olla osallistujana satunnaisluvun generoimiseen. Manipuloimattomuudella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi vaikuttaa satunnaisluvun generoimiseen. Ennustamisella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi ennustaa generoitavaa lukua. Julkisuudella ja vahvistettavuudella tarkoitetaan sitä, että satunnaisluvun generoimisen protokollan eteneminen on kaikkien käyttäjien nähtävissä, ja generoidun satunnaisluvun kohdalla voidaan tarkistaa, että se on generoitu tätä protokollaa käyttäen.
+Lohkoketjun lupavapaa luonne, jossa jokainen osallistuja on mahdollisesti vahingollinen toimija, vaatii satunnaislukujen generoimisen protokollan olevan hajautettu, manipuloimaton, ennustamaton, julkinen ja todennettavissa. Hajautettu tarkoittaa tässä yhteydessä lupavapautta, eli kuka tahansa käyttäjä voi olla osallistujana satunnaisluvun generoimiseen. Manipuloimattomuudella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi vaikuttaa satunnaisluvun generoimiseen. Ennustamisella tarkoitetaan, että yksikään käyttäjä, generoimiseen osallistuja tai ulkopuolinen, ei voi ennustaa generoitavaa lukua. Julkisuudella ja todennettavuudella tarkoitetaan sitä, että satunnaisluvun generoimisen protokollan eteneminen on kaikkien käyttäjien nähtävissä, ja generoidun satunnaisluvun kohdalla voidaan tarkistaa, että se on generoitu tätä protokollaa käyttäen.
+
+\section{Määrittely}
 
 Tässä tapauksessa satunnaislukujen generoimisen ongelma rajataan tarkemmin seuraavasti:
-Yhden satunnaisluvun generoimiseen osallistuu N osallistujaa,  N $>$ 1. Lohkoketjuympäristössä jokaisella osallistujalla on lohkoketjussa käytettävän asymmetrisen salausmenetelmän tuottamat julkinen avain P ja yksityinen avain S. Kuka tahansa voi liittyä generointiprotokollaan ennen protokollan suorittamisen aloittamista, mutta uusia osallistujia ei voi liittyä kesken protokollan suorittamisen. Tämä tilanne vastaa monen sovelluksen käyttötapausta, kuten esimerkiksi lottoarvonnan. Kun arvonta alkaa, ei uusia osallistuja voi enää liittyä. Tilanne voi vastata myös konsensusmekanismin vaihetta, jossa seuraavan lohkon tuottaja valitaan satunnaisesti valinnan aloittaessa lukittavasta joukosta osallistujia. Generoitu satunnaisluku julkaistaan lohkoketjuun. 
+Yhden satunnaisluvun generoimiseen osallistuu N osallistujaa,  N $>$ 2. Lohkoketjuympäristössä jokaisella osallistujalla on lohkoketjussa käytettävän asymmetrisen salausmenetelmän tuottamat julkinen avain P ja yksityinen avain S. Kuka tahansa voi liittyä generointiprotokollaan ennen protokollan suorittamisen aloittamista, mutta uusia osallistujia ei voi liittyä kesken protokollan suorittamisen. Tämä tilanne vastaa monen sovelluksen käyttötapausta, kuten esimerkiksi lottoarvonnan. Kun arvonta alkaa, ei uusia osallistuja voi enää liittyä. Tilanne voi vastata konsensusmekanismin vaihetta, jossa seuraavan lohkon tuottaja valitaan satunnaisesti valinnan aloittaessa lukittavasta joukosta osallistujia. Generoitu satunnaisluku julkaistaan lohkoketjuun. 
 
 Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset \cite{simic_review_2020}:
 \begin{itemize}
     \item[--] V1: Protokollan generoimat satunnaisluvut noudattavat satunnaisjakaumaa
     \item[--] V2: Protokollan generoimia satunnaislukuja ei voi ennustaa
-    \item[--] V3: On todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
+    \item[--] V3: On julkisesti todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
     \item[--] V4: Generoitava satunnaisluku ei ole kenenkään manipuloitavissa
-\end{itemize}
+\end{itemize}\textbf{}
 Käyttötarkoituksesta riippuen voidaan vaatia, että:
 
 \begin{itemize}
     \item[--] V5: Jos protokollaa suorittaa vähintään 1 rehellinen osallistuja, ei protokollaa voi estää generoimasta satunnaislukua.
     \item[--] V6: Protokollan suorittamiseen kuluu aikaa enintään t.
+    \item[--] V7: Yksittäisen osallistujan kommunikointikompleksisuus on enintään x, esim. O(n)
 \end{itemize}
 
+\section{Olemassaolevat protokollat}
+
+\subsection{Ulkoiset ratkaisut}
 Käydään läpi olemassaolevia protokollia satunnaislukujen generoimiseen lohkoketjusovelluksen näkökulmasta. 
 
-Monet lohkoketjusovellukset eivät toteuta omaa protokollaa satunnaislukujen generoimiseen, vaan käyttävät ulkoista satunnaislukujen lähdettä. Yleisin näistä on lohkon hajautusarvon käyttäminen siemenenä?! pseudo-satunnaisen funktion syötteenä. Lohkon hajautusarvo täyttää vaatimukset 1-3, mutta lohkon louhijat voivat vaikuttaa arvoon.
+Monet lohkoketjusovellukset eivät toteuta omaa protokollaa satunnaislukujen generoimiseen, vaan käyttävät ulkoista satunnaislukujen lähdettä. Yleisin näistä on lohkon hajautusarvon käyttäminen siemenenä?! pseudo-satunnaisen funktion syötteenä. Lohkon hajautusarvo täyttää vaatimukset 1-3, mutta lohkon louhijat voivat vaikuttaa arvoon, joten luku on manipuloitavissa, eikä täytä vaatimusta 4. Jos lohkon tuottajan saama hyöty lohkon tälle haitallisen lohkon julkaisematta jättämisestä on suurempi kuin lohkon julkaisemisesta saatava palkinto, on lohkontuottajalla intressi jättää lohko julkaisematta. Tämä aiheuttaa vinouman satunnaislukujen jakaumaan lohkontuottajalle hyödylliseen suuntaan.
+
+Toinen suosittu ulkoinen lähde on Chainlink VRF \cite{noauthor_verifiable_2020}. Tällöin sovellus käyttää Chainlink verkon satunnaislukuoraakkeli palvelua, joka tarjoaa sovellukselle vaatimukset 1-4 täyttävän satunnaisluvun. Tämän satunnaisluvun saaminen kuitenkin maksaa Chainlink virtuaalivaluuttaa, ja monelle sovellukselle ulkopuolisesta palvelusta maksaminen ei ole käytännöllistä. Tämän takia sovellus voi vaatia käytettävän protokollaa, jossa satunnaisluvun generointi onnistuu osallistujilta.
+
+\subsection{Kommitointi ja paljastaminen}
+Tässä protokollassa satunnaisluku generoidaan kahdessa osassa. Ensimmäisellä kierroksella jokainen osallistuja kommitoi ensin kaikkien nähtäväksi salatun satunnaisluvun. Toisella kierroksella osallistujat paljastavat yksi kerrallaan kommitoitunsa satunnaisluvun. Paljastetut satunnaisluvut yhdistetään, minkä seurauksena saadaan satunnaisluku. Olettaen, että vähintään yksi osallistuja on rehellinen, tämä protokolla täyttää vaatimukset 2, 3 ja 4 \cite{simic_review_2020}. Ongelmana protokollassa on, että viimeinen paljastaja näkee generoidun satunnaisluvun ja voi täten olla julkaisematta syötettään, jos generoitu luku ei ole suosiollinen \cite{simic_review_2020}.
+
+Yksi tapa estää viimeisen paljastajan manipulointi on käyttää salaisuuden jakamista. (t, n)-Salaisuuden jakaminen (SS) on tekniikka, jolla salaisuuden s jakaja voi jakaa n osallistujalle salaisuuden, niin, että mikä tahansa t osallistujan joukko voi rekonstruktuoida salaisuuden kun toisaalta mikä tahansa joukko kooltaan pienempi kuin t ei saa minkäänlaista tietoa salaisuudesta\cite{syta_scalable_2017}. Julkisesti todennettavassa salaisuuden jakamisessa (VSS) jakajan jakamat salaisuuden osuudet on todennettavissa valideiksi paljastamatta osuuksia tai salaisuutta. Käytettäessä julkisesti todennettavissa olevaa (t, n) salaisuuden jakamista generointiprotokollassa tehdään oletus, että N osallistujasta enintään t-1 osallistujaa on epärehellisiä ja rehellisiä on vähintään 2t. Tällöin protokollassa jokainen osallistuja jakaa ensin oman salaisen syötteensä osiin VSS metodia käyttäen, ja lähettää osat muille osallistujille. Kun kaikilla osallistujilla on muiden osallistujien osat ja ne on vahvistettu, julkaistaan osat kaikille osallistujille. Muistettakoon, että nyt osallistuja voi rekonstruktuoida toisen osallistujan salaisuuden jos hän on vastaanottanut vähintään t osaa. Siis epärehellinen osallistuja ei voi estää salaisuutensa julkaisemista, sillä jokainen rehellinen osallistuja voi saa t osuutta jokaisesta salaisuudesta ja voi siten julkaista jokaisen osallistujan syötteen. Tämä protokolla täyttää kriteerit 1-4, mutta esimerkiksi kommunikaatiokompleksisuus on $O(n^3)$, mikä on liian suuri moneen lohkoketjusovellukseen.
+
+\subsection{Peräkkäinen työtodistus(Proof of Work)}
+Työtodistus konsensusmekanismia voidaan käyttää omassa satunnaislukujen generoimisen protokollassa \cite{lesaege_kleros_2020}. Esimerkkinä toimii protokolla, jossa jokainen osallistuja syöttää ensin yhteiseen siemenarvoon oman arvonsa. Sitten jokainen osallistuja laskee rekursiivisesti hajautusarvon tästä siemenarvosta h kertaa, tallentaen välituloksia. h on ennalta sovittu vaikeusaste. Tätä laskutoimitusta ei voi rinnakkaistaa, joten siihen kuluvalle ajalle on jokin teoreettinen alaraja. Ensimmäinen viimeisen hajautusarvon laskija julkaisee arvon osallistujille, minkä jälkeen arvo voidaan vahvistaa muiden toimesta kyselemällä laskijalta välituloksia. Väärä arvo voidaan huomata log(h) kyselyllä. Kun arvo on vahvistettu, voidaan sitä käyttää siemenarvona satunnaisten lukujen generoimiseen. 
+
+Protokolla täyttää vaatimukset 1-7. Ongelmana on, että vaikeustason h pitää olla riittävän suuri, jotta kaikki vaatimukset täyttyvät, jolloin generointiin kuluva aika t kasvaa monille käytännön sovelluksille liian suureksi. Osallistujien laitteiston suorituskykyjen erot voivat aiheuttaa ongelmia. Hajautusarvon laskeminen on helposti optimoitavissa.
+
+Äsken esitelty rekursiivinen funktio on yksinkertainen esimerkki todennettavasta viivefunktiosta (Verifiable Delay Function, VDF). Satunnaislukujen generoimiseen sopivan VDF:n pitäisi aiheuttaa riittävä viive, jotta vaatimukset 1-4 täyttyvät, mutta käytännön sovelluksia varten vahvistamisen pitäisi onnistua mahdollisimman pienessä ajassa. Funktion laskennan laiteoptimoinnista saatavan hyödyn pitäisi olla mahdollisimman pieni. VDF:ää käyttää kommitoinnin ja paljastamisen protokollan osana poistamaan viimeisen paljastajan etu \cite{boneh_verifiable_2018}.
+
+\subsection{Muita protokollia}
+Muita mainitsemisen arvoisia protokollia ovat peliteoreettiset sekä homomorfista salausta käyttävät protokollat \cite{simic_review_2020}.
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
