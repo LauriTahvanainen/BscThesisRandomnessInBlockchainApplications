@@ -1,1 +1,23 @@
-\chapter{Methods\label{methods}}
+\chapter{Määritelmät\label{methods}}
+
+Lohkoketjusovelluksella tarkoitetaan sovellusta, jonka ydinlogiikan suoritus tapahtuu lohkoketjun solmuissa, eli sovellusta suoritetaan lohkoketjun protokollan mukaisessa hajautetussa verkossa. Sovelluksen tila tallennetaan lohkoketjun hajautettuun tietokantaan. Esimerkiksi älysopimuksista koostuva, Ethereum\cite{ethereum_foundation_ethereum_nodate}
+ lohkoketjussa suoritettava, sovellus on esimerkki lohkoketjusovelluksesta. Yksi lohkoketjusovelluksen ominaispiirre on lupavapaus, joka tarkoittaa, että kuka tahansa voi kommunikoida sovelluksen kanssa. Sovelluksia tukevan lohkoketjualustan tavoitteena on usein myös, että sovelluksia ei voida sensuroida, tarkoittaen, että sovellusten suorittamista ei voi estää mikään yksittäinen toimija.
+Lohkoketjun lupavapaa luonne vaatii satunnaislukujen generoimisen protokollan olevan hajautettu, manipuloimaton, ennustamaton ja julkisesti todennettavissa.
+
+Tässä tapauksessa satunnaislukujen generoimisen ongelma rajataan tarkemmin seuraavasti:
+Yhden satunnaisluvun generoimiseen osallistuu $N$ osallistujaa,  $N > 2$. Lohkoketjuympäristössä jokaisella osallistujalla on lohkoketjussa käytettävän asymmetrisen salausmenetelmän tuottamat julkinen avain P ja yksityinen avain S, joiden avulla on vahvistettavissa, että tietty viesti on tietyn osallistujan lähettämä. Kuka tahansa voi liittyä generointiprotokollaan ennen protokollan suorittamisen aloittamista, mutta uusia osallistujia ei voi liittyä kesken protokollan suorittamisen. Tilanne vastaa monen sovelluksen käyttötapausta, kuten esimerkiksi lottoarvonnan. Kun arvonta alkaa, ei uusia osallistuja voi enää liittyä. Generoitu satunnaisluku julkaistaan lohkoketjuun. 
+
+Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset \cite{simic_review_2020}:
+\begin{itemize}
+    \item[--] 1: Protokollan generoimat satunnaisluvut noudattavat satunnaisjakaumaa
+    \item[--] 2: Protokollan generoimia satunnaislukuja ei voi ennustaa
+    \item[--] 3: On julkisesti todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
+    \item[--] 4: Generoitava satunnaisluku ei ole kenenkään manipuloitavissa
+\end{itemize}\textbf{}
+Käyttötarkoituksesta riippuen voidaan vaatia, että:
+
+\begin{itemize}
+    \item[--] 5: Jos protokollaa suorittaa vähintään 1 rehellinen osallistuja, ei protokollaa voi estää generoimasta satunnaislukua.
+    \item[--] 6: Protokollan suorittamiseen kuluu aikaa enintään t.
+    \item[--] 7: Yksittäisen osallistujan kommunikointikompleksisuus on enintään x, esim. O(n)
+\end{itemize}

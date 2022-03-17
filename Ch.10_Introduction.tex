@@ -1,3 +1,9 @@
 \chapter{Johdanto\label{intro}}
 
-Viite testi \citep{christianson_security_2011}
+Satunnaisuutta on jo pitkään hyödynnetty osana hajautettujen järjestelmien toimintaa parantamaan järjestelmien luotettavuutta sekä turvallisuutta. M. Rabin esitti vuonna 1983 satunnaisuutta generoivan majakan (Randomness Beacon), palvelun, jonka avulla voidaan toteuttaa esimerkiksi varmennettujen sähköpostien lähettämisen, sekä sopimusten allekirjoittamisen protokollat \cite{rabin_transaction_1983}. Yksi keskitetty satunnaisuutta generoivan majakan toteutus on NIST-majakka \cite{computer_security_division_interoperable_2019}. Nykypäivänä luotettavalle satunnaisuuden generoimiselle on tarvetta esimerkiksi julkisen salauksen avaimien generoimisessa \cite{corrigan-gibbs_ensuring_2014}, joka on operaatio, jonka oikeelliseen toimintaan nojaavat internetin käytetyimmät salatun viestinnän protokollat. Majakka toimii luotettuna kolmantena osapuolena, mutta hajautettuun järjestelmään voi kohdistua vaatimus siitä, että se kykenee generoimaan itse tarvitsemansa satunnaisuuden jolloin satunnaisuuden generoimiseen tarvitaan hajautettu protokolla. Kolmannen osapuolen palveluna käytettävä majakka voi myös itsessään olla toteutettu hajautettua protokollaa käyttäen.
+
+
+
+
+Tässä tutkielmassa kokoan yhteen olemassaolevia protokollia hajautettuun satunnaislukujen generoimiseen.
+Käsittelen protokollia erityisesti lohkoketjusovellusten näkökulmasta ja jotkut protokollat on suunnitelty nimenomaan lohkoketjuympäristöön, mutta esittelen tutkielmassa myös protokollia jotka eivät vaadi toimiakseen lohkoketjuympäristöä ja joita voidaan täten suorittaa perinteisessä hajautetussa ympäristössä. Luvussa kaksi määrittelen tarvittavat käsitteet, minkä jälkeen luku kolme esittelee kootut protokollat. Luvussa neljä analysoidaan protokollien aika, sekä kommunikointivaatimuksia, sekä sitä miten protokollat täyttävät vaatimukset satunnaisuudesta, ennustamattomuudesta, todennettavuudesta sekä manipuloimattomuudesta. Luku viisi toimii yhteenvetona.
