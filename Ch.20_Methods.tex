@@ -1,10 +1,9 @@
 \chapter{Määritelmät\label{methods}}
 
 \section{Verkko}
-Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisesti. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Käytettäessä lohkoketjua osallistujien transaktioiden lähettäminen tapahtuu asynkronisesti, mutta osallistujat jakavat lohkoketjun muodostaman ajan. Oletaan, että lohkoketju tuottaa uusia lohkoja keskimäärin vakio ajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein.
+Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisesti. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Käytettäessä lohkoketjua osallistujien transaktioiden lähettäminen tapahtuu asynkronisesti, mutta osallistujat jakavat lohkoketjun muodostaman ajan. Oletetaan, että lohkoketju tuottaa uusia lohkoja keskimäärin vakio ajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein.
 
 \section{Hajautusfunktio}
-Hajautusfunktio h on funktio joka
 
 \section{Julkisen avaimen salaus}
 
@@ -20,9 +19,9 @@ Hajautusfunktio h on funktio joka
 
 Protokollaan oletetaan osallistuvan $N$ osallistujaa, $N > 1$.
 
-Järjestelmässä jokaisella osallistujalla on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla osallistuja tunnistaa itsensä. Avainparia, jolla hallinnoidaan muille osallistujille näkyvää julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. On huomioitavaa, että yksittäinen osallistuja voi generoida itselleen haluamansa määrän avainpareja ja näyttäytyä täten muille osallistujille monina osallistujina.
+Haitallisia osallistujia kutsutaan myös hyökkääjiksi. Hyökkääjien laskentateho on korkeintaan polynomisesti suurempaa kuin rehellisten osallistujien. Hyökkääjä ei siis kykene vahvoiksi oletettuja kryptograafisia työkaluja, kuten esimerkiksi julkisen avaimen salausta.
 
-Haitallisten osallistujien oletetaan olevan...
+Järjestelmässä jokaisella osallistujalla on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla osallistuja tunnistaa itsensä. Hyökkääjä ei voi siten esittää toista osallistujaa. Avainparia, jolla hallinnoidaan muille osallistujille näkyvää julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. On huomioitavaa, että yksittäinen osallistuja voi generoida itselleen haluamansa määrän avainpareja ja näyttäytyä täten muille osallistujille monina osallistujina.
 
 \section{Lohkoketju}
 
@@ -41,7 +40,7 @@ Tutkielman kannalta kiinnostavaa PoW-konsensusmekanismissa on se, että nonce-ar
 
 \subsection{PoS}
 
-PoS konsensusmekanismissa lohkoja tuottaa validaattoreiksi kutsuttu joukko osallistujia. Uuden lohkon tuottaja valitaan validaattoreiden joukosta satunnaisesti ja muut validaattorit vahvistavat luodun lohkon. Paino, joka määrää validaattorin todennäköisyyden tulla valituksi lohkon tuottajaksi ja tärkeyden vahvistettaessa uusia lohkoja määräytyy validaattorin tilin saldon myötä. Osallistuja joka ei ole validaattori voi delegoida oman saldonsa validaattorille palkintoa vastaan. Koska lohkoketjun valuutalla on arvoa, on mekanismissa haitallisten osallistujien omattava mittava määrä taloudellista arvoa, jotta he voivat luoda haluamiaan lohkoja. Onnistunut hyökkäys myös alentaisi valuutan arvoa, haitaten hyökkääjää, joka todennäköisesti hyökkää nimenomaan valuutan arvon takia.
+PoS konsensusmekanismissa lohkoja tuottaa validaattoreiksi kutsuttu joukko osallistujia. Uuden lohkon tuottaja valitaan validaattoreiden joukosta satunnaisesti ja muut validaattorit vahvistavat luodun lohkon. Paino, joka määrää validaattorin todennäköisyyden tulla valituksi lohkon tuottajaksi ja tärkeyden vahvistettaessa uusia lohkoja määräytyy validaattorin tilin saldon myötä. Osallistuja joka ei ole validaattori voi delegoida oman saldonsa validaattorille palkintoa vastaan. Koska lohkoketjun valuutalla on arvoa, on mekanismissa hyökkääjien omattava mittava määrä taloudellista arvoa, jotta he voivat luoda haluamiaan lohkoja. Onnistunut hyökkäys myös alentaisi valuutan arvoa, haitaten hyökkääjää, joka todennäköisesti hyökkää nimenomaan valuutan arvon takia.
 
 PoS-lohkoketjussa validaattoreiden tulee saavuttaa konsensus uuden lohkon oikeellisuudesta ja ketjussa on usein käytössä bysanttilaisia ongelmia sietävä konsensusmekanismi. Tällöin haitallisia osallistujia voi olla maksimissaan $t$ osallistujista, kun osallistujia on oltava vähintään $3t + 1$ \cite{10.1145/322186.322188}. Tämä alaraja pätee kuitenkin synkronisessa verkossa. Asynkronisessa verkossa konsensuksen taattu saavuttaminen deterministisellä konsensusprotokollalla on mahdotonta, jos edes yksi osallistuja toimii virheellisesti \cite{fischer_impossibility_1985}. Asynkroniseen ympäristöön on kehitetty epädeterministisiä, satunnaisuutta hyödyntäviä protokollia, joilla konsensuksen saavuttaminen on mahdollista. Näistä ensimmäisiä oli esimerkiksi M. Rabin esittämä protokolla \cite{10.1109/SFCS.1983.48}. Lohkoketjuesimerkkinä voi tutustua esimerkiksi Algorand ketjun konsensukseen \cite{gilad_algorand_2017}. PoS-lohkoketjuilla on siis tarve hajautetulle satunnaisuudelle verrattaen PoW-ketjuihin, jotka tuottavat satunnaisuutta.
 
@@ -66,7 +65,7 @@ Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset joi
 \end{itemize}\textbf{}
 
 Tutkielmassa läpikäytävien protokollien pääpaino on vaatimuksissa 2, 3 ja 4 protokollien lupavapauden myötä. Lupavapaus johtaa siihen, että osallistujat eivät voi luottaa toisten osallistujien toimivan aina protokollan mukaisesti. Tämän vuoksi vaikka protokollan tuottamat satunnaisluvut ideaalitilanteessa noudattaisivatkin satunnaisjakaumaa, on osallistujan hyvä vaatia, että kukaan, osallistuja tai ulkopuolinen, ei kykene ennustamaan lukuja tai vaikuttamaan niihin. Julkisella todennettavuudella varmistetaan, että 
-tuotetun luvun käyttäjä voi varmistua siitä, että luku on tuotettu nimenomaisella protokollalla. Tämä on erityisen tärkeää kun protokolla toimii majakkana. Muuten hyökkääjä voi esimerkiksi esittää majakkaa, mikä ei vaadi osallistumista itse generoimiseen. Tutkielmassa oletetaan, että jokaisella osallistujalla on käytössään luotettava satunnaisuuden lähde, jota rehellinen osallistuja käyttää jos protokolla vaatii osallistujalta satunnaisen syötteen. Haitalliselle osallistujalle tämä yksittäisen osallistujan satunnaisuuden lähde näyttäytyy täysin satunnaisena.
+tuotetun luvun käyttäjä voi varmistua siitä, että luku on tuotettu nimenomaisella protokollalla. Tämä on erityisen tärkeää kun protokolla toimii majakkana. Muuten hyökkääjä voi esimerkiksi esittää majakkaa, mikä ei vaadi osallistumista itse generoimiseen. Tutkielmassa oletetaan, että jokaisella osallistujalla on käytössään luotettava satunnaisuuden lähde, jota rehellinen osallistuja käyttää jos protokolla vaatii osallistujalta satunnaisen syötteen. Hyökkääjälle tämä yksittäisen osallistujan satunnaisuuden lähde näyttäytyy täysin satunnaisena.
 
 Vaatimusten lisäksi seuraavilla protokollan ominaisuuksilla on merkitystä protokollan käytettävyyden kannalta:
 
