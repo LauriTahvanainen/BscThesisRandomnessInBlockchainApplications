@@ -1,5 +1,7 @@
 \chapter{Määritelmät\label{methods}}
 
+Yksi keskitetty satunnaisuutta generoivan majakan toteutus on NIST-majakka \cite{computer_security_division_interoperable_2019}. Majakka toimii luotettuna kolmantena osapuolena, mutta hajautettuun järjestelmään voi kohdistua vaatimus siitä, että se kykenee generoimaan itse tarvitsemansa satunnaisuuden jolloin satunnaisuuden generoimiseen tarvitaan hajautettu protokolla. Kolmannen osapuolen palveluna käytettävä majakka voi myös itsessään olla toteutettu hajautettua protokollaa käyttäen esimerkiksi vikasietoisuuden parantamiseksi.
+
 \section{Verkko}
 Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisesti. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Käytettäessä lohkoketjua osallistujien transaktioiden lähettäminen tapahtuu asynkronisesti, mutta osallistujat jakavat lohkoketjun muodostaman ajan. Oletetaan, että lohkoketju tuottaa uusia lohkoja keskimäärin vakio ajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein.
 
@@ -19,9 +21,9 @@ Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin v
 
 Protokollaan oletetaan osallistuvan $N$ osallistujaa, $N > 1$.
 
-Haitallisia osallistujia kutsutaan myös hyökkääjiksi. Hyökkääjien laskentateho on korkeintaan polynomisesti suurempaa kuin rehellisten osallistujien. Hyökkääjä ei siis kykene vahvoiksi oletettuja kryptograafisia työkaluja, kuten esimerkiksi julkisen avaimen salausta.
+Haitallisia osallistujia kutsutaan myös hyökkääjiksi. Hyökkääjien laskentateho on korkeintaan polynomisesti suurempaa kuin rehellisten osallistujien. Hyökkääjä ei siis kykene murtamaan vahvoiksi oletettuja kryptograafisia työkaluja, kuten esimerkiksi julkisen avaimen salausta. Hyökkääjä ei myöskään kykene estämään tai viivyttämään toisten osallistujien lähettämiä viestejä.
 
-Järjestelmässä jokaisella osallistujalla on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla osallistuja tunnistaa itsensä. Hyökkääjä ei voi siten esittää toista osallistujaa. Avainparia, jolla hallinnoidaan muille osallistujille näkyvää julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. On huomioitavaa, että yksittäinen osallistuja voi generoida itselleen haluamansa määrän avainpareja ja näyttäytyä täten muille osallistujille monina osallistujina.
+Järjestelmässä jokaisella osallistujalla on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla osallistuja osoittaa identiteettinsä. Hyökkääjä ei voi siten esittää toista osallistujaa. Avainparia, jolla hallinnoidaan muille osallistujille näkyvää julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. On huomioitavaa, että yksittäinen osallistuja voi generoida itselleen haluamansa määrän avainpareja ja näyttäytyä täten muille osallistujille monina osallistujina.
 
 \section{Lohkoketju}
 
@@ -29,7 +31,7 @@ Lohkoketju on hajautettu, lupavapaa ja muuttumaton tilikirja. Perinteisesti tili
 
 Lohkoketju on lupavapaa, mikä tarkoittaa sitä, että kuka tahansa voi osallistua tietokannan päivittämiseen lähettämällä uusia transaktioita, sekä lisäämällä transaktioita lohkoissa tietokantaan suorittamalla ketjun konsensusalgoritmia. Osallistujan tunnisteena toimii vain tämän salausavaimet. Lupavapauden johdosta järjestelmään voi osallistua myös haitallisia toimijoita, jotka haluavat esimerkiksi lähettää itseään hyödyntäviä transaktioita. Järjestelmän ollessa hajautettu, jotkut osallistujat voivat myös kohdata teknisiä ongelmia ja lopettaa osallistumisen, tai jopa alkaa lähettämään virheellisiä transaktioita haluamattaan. Osallistujilla pitää olla mekanismi jolla saavutetaan konsensus siitä mikä on tietokannan nykyinen validi tila kuvaillussa lupavapaassa ympäristössä. Lohkoketjun osallistujat suorittavat konsensusalgoritmia tietokannan nykyisen validin tilan selvittämiseksi. 
 
-Huomioidaan kaksi merkittävintä konsensusmekanismia. Työtodistus(Proof of Work, PoW)-konsensusmekanismia, käyttää kirjoitushetkellä esimerkiksi Bitcoin, sekä Ethereum lohkoketjut. PoW-konsensusta kutsutaan myös Nakamoto-konsensukseksi, jonka tarkempi kuvaus löytyy Bitcoin-whitepaperista \cite{Nakamoto_bitcoin}. Uudempi ja yhä yleistyvä mekanismi on  osakkuustodistus(Proof of Stake, PoS). 
+Huomioidaan kaksi merkittävintä konsensusmekanismia. Työtodistus(Proof of Work, PoW)-konsensusmekanismia, käyttää kirjoitushetkellä esimerkiksi Bitcoin, sekä Ethereum lohkoketjut. PoW-konsensusta kutsutaan myös Nakamoto-konsensukseksi, jonka tarkempi kuvaus löytyy Bitcoin-valkopaperista \cite{Nakamoto_bitcoin}. Uudempi ja yhä yleistyvä mekanismi on  osakkuustodistus(Proof of Stake, PoS). 
 
 \subsection{PoW}
 PoW-konsensuksessa uusien transaktioiden lohko liitetään lohkoketjuun pääpiirteittäin seuraavan protokollan mukaisesti: Jokainen konsensukseen osallistuja, joita kutsutaan kaivajiksi (Miner) kilpailee uuden lohkon lisäämisestä. Kaivaja valitsee uusista transaktioista joukon uutta lohkoa varten ja tarkistaa transaktioiden oikeellisuuden. Transaktiot, edellisen lohkon hajautusarvo, aikaleima sekä osallistujan valitsema satunnainen arvo (Nonce) syötetään hajautusfunktiolle (Esim. Bitcoinin tapauksessa SHA256). Aikaisempien lohkojen perusteella on sovittu tämänhetkistä vaikeutta kuvaava luku $v$. Jos saadun hajautusarvon alussa on peräkkäin vähintään $v$ 0-merkkiä on lohko hyväksyttävä. Tällöin kaivaja julkaisee uuden lohkon verkolle. Lohkon kanssa lähetetään metadataa, kuten esimerkiksi löydetty nonce, edellisen lohkon hajautusarvo sekä aikaleima. Muut kaivajat voivat vielä vahvistaa lohkon oikeellisuuden suorittamalla yllä mainitun transaktioiden validoinnin ja hajautusarvon laskemisen uudestaan ja varmistamalla, että saatu hajautusarvo on löytäjän ilmoittama. Kun uusi lohko on validoitu, aloittavat kaivajat prosessin alusta edellisenä lohkona toimien nyt löydetty validoitu lohko. Kaivajat yrittävät aina lisätä uutta lohkoa pisimmän validin ketjun jatkeeksi. Löytäjä saa palkkiona uuden lohkon luomisesta vastaluotua valuuttaa, kuten myös transaktiokuluja. Transaktiokulu on transaktion lähettäjän määräämä arvo, joka lisätään lähetettävän arvon päälle, joten kaivajat valitsevat lohkoon transaktioita joissa on suurimmat transaktiokulut.
@@ -62,7 +64,7 @@ Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset joi
     \item[--] 2: Protokollan generoimia satunnaislukuja ei voi ennustaa
     \item[--] 3: On julkisesti todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
     \item[--] 4: Generoitava satunnaisluku ei ole kenenkään manipuloitavissa
-\end{itemize}\textbf{}
+\end{itemize}
 
 Tutkielmassa läpikäytävien protokollien pääpaino on vaatimuksissa 2, 3 ja 4 protokollien lupavapauden myötä. Lupavapaus johtaa siihen, että osallistujat eivät voi luottaa toisten osallistujien toimivan aina protokollan mukaisesti. Tämän vuoksi vaikka protokollan tuottamat satunnaisluvut ideaalitilanteessa noudattaisivatkin satunnaisjakaumaa, on osallistujan hyvä vaatia, että kukaan, osallistuja tai ulkopuolinen, ei kykene ennustamaan lukuja tai vaikuttamaan niihin. Julkisella todennettavuudella varmistetaan, että 
 tuotetun luvun käyttäjä voi varmistua siitä, että luku on tuotettu nimenomaisella protokollalla. Tämä on erityisen tärkeää kun protokolla toimii majakkana. Muuten hyökkääjä voi esimerkiksi esittää majakkaa, mikä ei vaadi osallistumista itse generoimiseen. Tutkielmassa oletetaan, että jokaisella osallistujalla on käytössään luotettava satunnaisuuden lähde, jota rehellinen osallistuja käyttää jos protokolla vaatii osallistujalta satunnaisen syötteen. Hyökkääjälle tämä yksittäisen osallistujan satunnaisuuden lähde näyttäytyy täysin satunnaisena.
@@ -75,3 +77,5 @@ Vaatimusten lisäksi seuraavilla protokollan ominaisuuksilla on merkitystä prot
     \item[--] 7: Mikä on protokollan suorittamisen absoluuttinen aikavaatimus?
     \item[--] 8: Mikä on yksittäisen osallistujan kommunikointikompleksisuus?
 \end{itemize}
+
+Protokollalta voitaisiin myös olettaa, että se tuottaa aina jonkun satunnaisluvun. Tämä ei kuitenkaan ole lohkoketjusovelluksessa välttämätöntä kaikissa tapauksissa. Älysopimukseen voidaan määrittää lohkonumero, jonka jälkeen osallistujat voivat vetää varansa ulos sopimuksesta, jolloin protokolla keskeytetään. Jos protokollaa käytetään majakkana internetissä voi siihen kohdistua vaatimus lukujen jatkuvasta tuottamisesta, sillä muut järjestelmät saattavat olla riippuvaisia näistä luvuista.
