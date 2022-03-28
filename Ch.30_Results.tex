@@ -13,11 +13,11 @@ Lohkon tiivistettä sekä osallistujien kommitointia käyttävien protokollien h
 
 Tiivisteen käyttämisen tapauksessa älysopimuksessa määritettään, että satunnaisuuden lähteenä käytetään tietyn tulevaisuuden lohkon tiivistettä. Tiivistettä ei käytetä suoraan, vaan satunnainen arvo saadaan syöttämällä tiiviste VDF:lle. Kun VDF:n aiheuttama viive valitaan sopivasti, ei lohkon kaivaja ehdi simuloimaan satunnaista arvoa ja tekemään päätöstä lohkon julkaisemisesta ennen kuin rehelliset kaivajat ovat lisänneet uuden tai jopa monia uusia lohkoja lohkoketjuun.
 
-Käytettäessä tiivistettä VDF:n kanssa on kommunikontikompleksisuus vakio. Satunnaisluvun saamiseksi sopimuksen kanssa pitää vuorovaikuttaa vain kaksi kertaa. Kerran tulevan lohkon numeron päättämiseksi ja toisen kerran VDF:stä saadun tuloksen julkaisemiseksi ketjuun. Satunnaisluku on satunnainen riippumatta osallistujista.
+Käytettäessä tiivistettä VDF:n kanssa on kommunikontikustannus vakio. Satunnaisluvun saamiseksi sopimuksen kanssa pitää vuorovaikuttaa vain kaksi kertaa. Kerran tulevan lohkon numeron päättämiseksi ja toisen kerran VDF:stä saadun tuloksen julkaisemiseksi ketjuun. Satunnaisluku on satunnainen riippumatta osallistujista.
 
 Parannellussa kommitoinnin protokollassa kaikki osallistujat syöttävät sopimukseen heti satunnaisen arvonsa. Arvojen XOR tai tiiviste syötetään VDF:lle. Kuka tahansa osallistujista voi julkaista VDF:n tuottaman satunnaisen arvon. Myös tässä tapauksessa VDF aiheuttaa sen, että hyökkääjä ei voi simuloida satunnaista arvoa ennen kuin on myöhäistä. 
 
-Kommunikointikompleksisuus on myös vakio. Protokolla vaatii osallistujilta yhden transaktion satunnaisuuden kommitointia varten ja yhdeltä osallistujalta transaktion VDF:n tuottaman arvon julkaisemiseksi. Arvo on satunnainen kunhan vähintään yksi osallistuja on rehellinen.
+Kommunikointikustannus on myös vakio. Protokolla vaatii osallistujilta yhden transaktion satunnaisuuden kommitointia varten ja yhdeltä osallistujalta transaktion VDF:n tuottaman arvon julkaisemiseksi. Arvo on satunnainen kunhan vähintään yksi osallistuja on rehellinen.
 
 VDF:n käyttämistä sovelluksissa vaikeuttaa käyttäjien ja mahdollisten hyökkääjien suuret erot laitteistojen tehokkuudessa. Viive tulisi voida valita niin, että protokolla on turvallinen tehokkaimpia laitteita vastaan, mutta kuitenkin niin, että rehellinen käyttäjä voi evaluoida funktion sovelluksen käyttötarkoituksen mukaisessa ajassa.
 
