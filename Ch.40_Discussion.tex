@@ -2,11 +2,11 @@
 
 
 
-Taulukkoon 4.1, on koottu kaikki esitellyt vaatimukset 1-4 täyttävät protokollat. Taulukossa on protokollan soveltamisen kannalta merkittäviä huomioita, arvio protokollan konfiguroinnin ja sekä yhden satunnaisluvun generoimisen aiheuttamasta kommunikaatiokustannuksesta yhdelle osallistujalle, sekä määrä joka osallistujista voi olla hyökkääjiä.
+Taulukkoon~\ref{table:results}, on koottu kaikki esitellyt vaatimukset 1-4 täyttävät protokollat. Taulukossa on protokollan soveltamisen kannalta merkittäviä huomioita, arvio protokollan konfiguroinnin ja sekä yhden satunnaisluvun generoimisen aiheuttamasta kommunikaatiokustannuksesta yhdelle osallistujalle, sekä määrä joka osallistujista voi olla hyökkääjiä.
 
 \begin{table}[h]
     \caption{Vaatimukset 1-4 täyttävät protokollat}
-    \label{crouch}
+    \label{table:results}
     \begin{tabular}{  l  p{5cm}  p{4cm} p{2cm} }
         \toprule
 \textbf{Protokolla}      
@@ -25,10 +25,14 @@ Kommitointi + VDF
 %& 
 %& 
 %<&  \\\hline
-%Merlin-ketjut
-%&        
-%& O(1)
-%& N \\
+Merlin-ketjut
+& Kuinka toimia tuottajien kanssa, jotka eivät paljasta Merlin-ketjun arvoaan? Merlin-ketjun varmuuskopiointi.
+& O(1) Konf. O(1) Gen. 
+& N-1 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+Tiivisteen ja kommitoinnin protokollat VDF:n kanssa soveltuvat erityisesti arvontatyylisiin lohkoketjusovelluksiin. Tiivisteen käyttäminen aiheuttaa yksittäiselle osallistujalle pienimmän kommunikaatiokompleksisuuden, sillä osallistujan tarvitsee vain liittyä protokollaan yhdellä transaktiolla. Kommitoinnissa osallistujan täytyy liittyä protokollaan ja kommitoida arvo, mitkä voidaan tehdä samassa transaktiossa, mutta transaktio on silti kalliimpi toteuttaa kuin tiivisteen käyttämisen tapauksessa.
+
+VDF:n käyttämistä sovelluksissa vaikeuttaa käyttäjien ja mahdollisten hyökkääjien suuret erot laitteistojen tehokkuudessa. Viive tulisi voida valita niin, että protokolla on turvallinen tehokkaimpia laitteita vastaan, mutta kuitenkin niin, että rehellinen käyttäjä voi evaluoida funktion sovelluksen käyttötarkoituksen mukaisessa ajassa.

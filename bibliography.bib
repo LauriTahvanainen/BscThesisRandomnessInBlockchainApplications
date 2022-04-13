@@ -1,4 +1,41 @@
 
+@incollection{StadlerMarkus2001PVSS,
+	address = {Berlin, Heidelberg},
+	series = {Lecture notes in computer science},
+	title = {Publicly verifiable secret sharing},
+	isbn = {3-540-61186-X},
+	abstract = {A secret sharing scheme allows to share a secret among several participants such that only certain groups of them can recover it. Verifiable secret sharing has been proposed to achieve security against cheating participants. Its first realization had the special property that everybody, not only the participants, can verify that the shares are cor- rectly distributed. We will call such schemes publicly verifiable secret sharing schemes, we discuss new applications to escrow cryptosystems and to payment systems with revocable anonymity, and we present two new realizations based on ElGamal’s cryptosystem.},
+	language = {english},
+	booktitle = {Advances in cryptology — {EUROCRYPT} ’96},
+	publisher = {Springer Berlin Heidelberg},
+	author = {Stadler, Markus},
+	year = {2001},
+	note = {ISSN: 0302-9743
+tex.copyright: Springer-Verlag Berlin Heidelberg 1996},
+	keywords = {Access Structure, Discrete Logarithm, Secret Sharing, Secret Sharing Scheme, Signature Scheme},
+	pages = {190--199},
+}
+
+@misc{Nakamoto_bitcoin,
+	title = {Bitcoin: {A} peer-to-peer electronic cash system},
+	url = {http://bitcoin.org/bitcoin.pdf},
+	author = {Nakamoto, Satoshi},
+}
+
+@inproceedings{schindler_hydrand_2020,
+	title = {{HydRand}: {Efficient} {Continuous} {Distributed} {Randomness}},
+	shorttitle = {{HydRand}},
+	doi = {10.1109/SP40000.2020.00003},
+	abstract = {A reliable source of randomness is not only an essential building block in various cryptographic, security, and distributed systems protocols, but also plays an integral part in the design of many new blockchain proposals. Consequently, the topic of publicly-verifiable, bias-resistant and unpredictable randomness has recently enjoyed increased attention. In particular random beacon protocols, aimed at continuous operation, can be a vital component for current Proof-of-Stake based distributed ledger proposals. We improve upon previous random beacon approaches with HydRand, a novel distributed protocol based on publicly-verifiable secret sharing (PVSS) to ensure unpredictability, bias-resistance, and public-verifiability of a continuous sequence of random beacon values. Furthermore, HydRand provides guaranteed output delivery of randomness at regular and predictable intervals in the presence of adversarial behavior and does not rely on a trusted dealer for the initial setup. Compared to existing PVSS based approaches that strive to achieve similar properties, our solution improves scalability by lowering the communication complexity from \${\textbackslash}mathcalO{\textbackslash}left( n{\textasciicircum}3 {\textbackslash}right)\$ to \${\textbackslash}mathcalO{\textbackslash}left( n{\textasciicircum}2 {\textbackslash}right)\$ . Furthermore, we are the first to present a detailed comparison of recently described schemes and protocols that can be used for implementing random beacons.},
+	booktitle = {2020 {IEEE} {Symposium} on {Security} and {Privacy} ({SP})},
+	author = {Schindler, Philipp and Judmayer, Aljosha and Stifter, Nicholas and Weippl, Edgar},
+	month = may,
+	year = {2020},
+	note = {ISSN: 2375-1207},
+	keywords = {Proposals, Protocols, Public key},
+	pages = {73--89},
+}
+
 @misc{cryptoeprint:2011:565,
 	title = {Cryptographic hash functions: {Recent} design trends and security notions},
 	author = {Al-Kuwari, Saif and Davenport, James H. and Bradford, Russell J.},
@@ -151,11 +188,6 @@ tex.issue\_date: April 1980},
 	language = {en},
 	urldate = {2022-03-21},
 	journal = {ethereum.org},
-}
-
-@misc{Nakamoto_bitcoin,
-	title = {Bitcoin: {A} peer-to-peer electronic cash system,” http://bitcoin.org/bitcoin.pdf},
-	author = {Nakamoto, Satoshi},
 }
 
 @incollection{RogawayPhillip2004CHBD,
