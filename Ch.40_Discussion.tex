@@ -2,7 +2,7 @@
 
 
 
-Taulukkoon~\ref{table:results}, on koottu kaikki esitellyt vaatimukset 1-4 täyttävät protokollat. Taulukossa on protokollan soveltamisen kannalta merkittäviä huomioita, arvio protokollan konfiguroinnin ja sekä yhden satunnaisluvun generoimisen aiheuttamasta kommunikaatiokustannuksesta yhdelle osallistujalle, sekä määrä joka osallistujista voi olla hyökkääjiä.
+Taulukkoon~\ref{table:results}, on koottu käsiteltyjä protokollia. Taulukossa on protokollan soveltamisen kannalta merkittäviä huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, sekä määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset.
 
 \begin{table}[h]
     \caption{Vaatimukset 1-4 täyttävät protokollat}
@@ -14,21 +14,25 @@ Taulukkoon~\ref{table:results}, on koottu kaikki esitellyt vaatimukset 1-4 täyt
 & \textbf{Kustannus}
 & \textbf{Hyökkääjiä} \\
 Lohkon tiiviste + VDF 
-& VDF turvallisen viiveen määrittely. Kaksi transaktiota, lohkonumeron päättäminen ja VDF:n tuloste.
-& O(1) Konf. O(1) Gen.
-& N \\\hline
+& VDF turvallisen viiveen määrittely. Kaksi transaktiota, lohkonumeron päättäminen ja VDF:n tuloste. Yksinkertaisin On-chain toteutus.
+& $O(1)$ Konf. $O(1)$ Gen.
+& $N$ \\\hline
 Kommitointi + VDF       
 & VDF turvallisen viiveen määrittely. Vaatii kaikkien kommitoinnin.                   
-&  O(1) Konf. O(1) Gen.
-& N-1  \\\hline
-%Kommitointi + PVSS        
-%& 
-%& 
-%<&  \\\hline
-Merlin-ketjut
+&  $O(1)$ Konf. $O(1)$ Gen.
+& $N-1$  \\\hline
+PVSS        
+& Korkea kommunikointikustannus. Monimutkainen toteutus.
+& $O(N^2)$
+& $N/2 - N/3$  \\\hline
+Merlin-ketju
 & Kuinka toimia tuottajien kanssa, jotka eivät paljasta Merlin-ketjun arvoaan? Merlin-ketjun varmuuskopiointi.
-& O(1) Konf. O(1) Gen. 
-& N-1 \\
+& $O(1)$ Konf. $O(1)$ Gen. 
+& $N-1$ \\\hline
+Caucus
+& Samat kuin Merlin-ketjun kanssa. Olemassaoleva älysopimustoteutus. Pienempi pysähtymisriski verrattuna Merlin-ketjuun.
+& $O(N^2)$ Konf. $O(1)$ Gen. 
+& $N-1$ \\\hline
         \bottomrule
     \end{tabular}
 \end{table}
