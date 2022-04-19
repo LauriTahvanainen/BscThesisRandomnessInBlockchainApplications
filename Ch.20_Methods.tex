@@ -28,9 +28,6 @@ Tutkielmassa tiivistefunktioiden oletetaan olevan kryptografisia, ja käytetää
 
 \textit{Todennettava Viivefunktio (Verifiable Delay Function, VDF)} on funktio, jonka evaluointi vaatii määritellyn määrän peräkkäisiä laskutoimituksia, mutta on tehokkaasti julkisesti vahvistettavissa, että tietty syöte tuottaa tietyn tuloksen \cite{boneh_verifiable_2018}. VDF:n evaluointi ei nopeudu rinnaikkaistamalla evaluointia, ja se mahdollistaa teoreettisen alarajan asettamisen sille, kuinka kauan evaluoinnissa kuluu aikaa.
 
-\textit{Homomorfinen salaus (Homomorphic Encryption, HE)} mahdollistaa tiettyjen laskutoimitusten suorittamisen salatulla datalla ilman, että salausta puretaan \cite{alma9928100443506253}. Laskutoimitusten tulos vastaa samaa kuin, että laskutoimitukset olisi tehty salaamattomalla datalla. Täysin homomorfisessa salauksessa (Fully Homomorphic Encryption, FHE) salatulla datalle voidaan suorittaa mitä tahansa laskentaa.
-
-
 \section{Verkon aika}
 Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisessa verkossa. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Lohkoketjussa osallistujien transaktioiden lähettäminen tapahtuu asynkronisesti, mutta osallistujat jakavat lohkoketjun muodostaman ajan. Lohkoketju pyrkii tuottamaan uusia lohkoja keskimäärin vakioajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein. Yhteisen ajan myötä protokollaan on mahdollista määritellä aikakatkaisu, jonka kuka tahansa voi laukaista.
 
@@ -110,3 +107,5 @@ Vaatimusten lisäksi seuraavilla protokollan ominaisuuksilla on merkitystä prot
 \end{enumerate}
 
 Kommunikointikompleksisuudella tarkoitetaan tutkielman tapauksessa sitä kuinka monta transaktiota protokollan yksittäinen osallistuja joutuu lähettämään osallistuakseen yhden satunnaisluvun tuottamiseen. 
+
+%TODO SYBIL SELITYS

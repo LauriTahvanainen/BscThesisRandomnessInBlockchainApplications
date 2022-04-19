@@ -2,38 +2,51 @@
 
 
 
-Taulukkoon~\ref{table:results}, on koottu käsiteltyjä protokollia. Taulukossa on protokollan soveltamisen kannalta merkittäviä huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, sekä määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset.
+Taulukkoon~\ref{table:results}, on koottu käsiteltyjä vaatimukset 1-4 täyttäviä protokollia. Vaatimukset täyttyvät vaihtelevin oletuksin, jotka on merkitty taulukkoon. Taulukossa on myös protokollan soveltamisen kannalta merkittäviä huomioita. Taulukossa on protokollan nimi, tekstimuotoisia huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset, sekä tieto siitä onko protokolla lohkoketjuympäristössä sybil resistentti.
 
 \begin{table}[h]
     \caption{Vaatimukset 1-4 täyttävät protokollat}
     \label{table:results}
-    \begin{tabular}{  l  p{5cm}  p{4cm} p{2cm} }
+    \begin{tabular}{  l  p{4cm}  p{2.5cm} p{2cm} p{4cm}}
         \toprule
+
 \textbf{Protokolla}      
 & \textbf{Huomioitavaa}
 & \textbf{Kustannus}
-& \textbf{Hyökkääjiä} \\
+& \textbf{Hyökkääjiä} 
+& \textbf{Sybil resistentti} \\
 Lohkon tiiviste + VDF 
 & VDF turvallisen viiveen määrittely. Kaksi transaktiota, lohkonumeron päättäminen ja VDF:n tuloste. Yksinkertaisin On-chain toteutus.
 & $O(1)$ Konf. $O(1)$ Gen.
-& $N$ \\\hline
+& $N$
+& Kyllä  \\\hline
 Kommitointi + VDF       
 & VDF turvallisen viiveen määrittely. Vaatii kaikkien kommitoinnin.                   
 &  $O(1)$ Konf. $O(1)$ Gen.
-& $N-1$  \\\hline
+& $N-1$  
+& Kyllä  \\\hline
 PVSS        
 & Korkea kommunikointikustannus. Monimutkainen toteutus.
 & $O(N^2)$
-& $N/2 - N/3$  \\\hline
+& $N/2 - N/3$  
+& Kyllä \\\hline
 Merlin-ketju
 & Kuinka toimia tuottajien kanssa, jotka eivät paljasta Merlin-ketjun arvoaan? Merlin-ketjun varmuuskopiointi.
 & $O(1)$ Konf. $O(1)$ Gen. 
-& $N-1$ \\\hline
+& $N-1$ 
+& Kyllä  \\\hline
 Caucus
 & Samat kuin Merlin-ketjun kanssa. Olemassaoleva älysopimustoteutus. Pienempi pysähtymisriski verrattuna Merlin-ketjuun.
 & $O(N^2)$ Konf. $O(1)$ Gen. 
-& $N-1$ \\\hline
+& $N-1$ 
+& Ei PVSS konfiguroinnilla \\\hline
+Homomorfinen salaus
+& Vaativa off-chain laskentaan nojaava toteutus. Osittain valmis toteutus saatavilla.
+& $O(N)$ Konf. $O(1)$ Gen. 
+& $N/3$
+& Ei  \\\hline
         \bottomrule
+
     \end{tabular}
 \end{table}
 
