@@ -1,6 +1,6 @@
 \chapter{Määritelmät\label{methods}}
 
-\section{Kryptografiset metodit}
+\section{Kryptografiset primitiivit}
 \textit{Tiivistefunktio} on funktio h, joka liittää mielivaltaisen pituiset syötteet saman pituisiin maalijoukon alkioihin, tiivisteisiin. Binäärimuodossa: 
 \begin{equation}
     H : \{0, 1\}^* \longrightarrow  \{0, 1\}^l \text{, missä $l$ on tiivisteen pituus}
@@ -15,57 +15,34 @@ Jotta tiivistefunktio olisi \textit{kryptografinen tiivistefunktio}, sen tulee t
 
 Tutkielmassa tiivistefunktioiden oletetaan olevan kryptografisia, ja käytetään vain termiä tiivistefunktio. Esimerkiksi Ethereum-lohkoketjussa on käytössä Keccak-256 tiivistefunktio. 
 
- Lohkoketjuteknologia käyttää \textit{Julkisen avaimen salausta} transaktioiden allekirjoittamiseen. Asymmetrinen avainpari toimii lohkoketjussa osallistujan tunnisteena, mikä mahdollistaa lupavapaan osallistumisen. Esimerkiksi Ethereum-ketjussa on käytössä elliptisiin käyriin nojaava ECDSA-algoritmi (Elliptic Curve Digital Signature Algorithm). 
+Lohkoketjuteknologia käyttää \textit{Julkisen avaimen salausta} transaktioiden allekirjoittamiseen. Asymmetrinen avainpari toimii lohkoketjussa osallistujan tunnisteena, mikä mahdollistaa lupavapaan osallistumisen. Esimerkiksi Ethereum-ketjussa on käytössä elliptisiin käyriin nojaava ECDSA-algoritmi (Elliptic Curve Digital Signature Algorithm). 
 
-% Lähde?
-\textit{Todennettava Satunnaisfunktio (Verifiable Random Function, VRF)} \cite{micali_verifiable_1999} on pohjimmiltaan julkisen avaimen salauksen versio avainta käyttävästä kryptografisesta tiivistefunktiosta \cite{papadopoulos2017making}. Vain salaisen avaimen omistaja voi laskea tiivisteen syötteellä $x$, mutta kuka tahansa vastaavan julkisen avaimen omaava voi todentaa, että tiiviste on laskettu käyttäen salaista avainta.
-%A VRF [63 ] is essentially the public-key version of a keyed crypto-
-%graphic hash. A VRF comes with a public-key pair (PK, SK ). Only
-%the holder of the private key SK can compute the hash, but anyone
-%with public key PK can verify the hash. A VRF hashes an input α
-%using the private key SK
-%β = FSK (α ) 
-
-\textit{Todennettava Viivefunktio (Verifiable Delay Function, VDF)} on funktio, jonka evaluointi vaatii määritellyn määrän peräkkäisiä laskutoimituksia, mutta on tehokkaasti julkisesti vahvistettavissa, että tietty syöte tuottaa tietyn tuloksen \cite{boneh_verifiable_2018}. VDF:n evaluointi ei nopeudu rinnaikkaistamalla evaluointia, ja se mahdollistaa teoreettisen alarajan asettamisen sille, kuinka kauan evaluoinnissa kuluu aikaa.
-
-\section{Verkon aika}
-Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisessa verkossa. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Lohkoketjussa osallistujien transaktioiden lähettäminen tapahtuu asynkronisesti, mutta osallistujat jakavat lohkoketjun muodostaman ajan. Lohkoketju pyrkii tuottamaan uusia lohkoja keskimäärin vakioajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein. Yhteisen ajan myötä protokollaan on mahdollista määritellä aikakatkaisu, jonka kuka tahansa voi laukaista.
-
-\section{Osallistujat}
-
-Satunnaislukuja tuottavaan protokollaan oletetaan osallistuvan $N$ osallistujaa, $N > 1$, joista jokaisella on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla osallistuja osoittaa identiteettinsä. Hyökkääjä ei voi siten esittää toista osallistujaa. 
-
-Lohkoketju on lupavapaa, mikä tarkoittaa sitä, että kuka tahansa voi osallistua lohkoketjun päivittämiseen lähettämällä uusia transaktioita sekä lisäämällä transaktioita lohkoissa lohkoketjuun suorittamalla ketjun konsensusalgoritmia. Lupavapauden johdosta järjestelmään voi osallistua myös haitallisia toimijoita, jotka haluavat esimerkiksi lähettää itseään hyödyntäviä transaktioita. Sillä järjestelmä on hajautettu, jotkut osallistujat voivat myös kohdata teknisiä ongelmia ja lopettaa osallistumisen tai jopa alkaa lähettämään virheellisiä transaktioita haluamattaan.
-
-Haitallisia osallistujia kutsutaan myös hyökkääjiksi. Hyökkääjän laskentatehon oletetaan olevan korkeintaan polynomisesti suurempi kuin rehellisten osallistujien. Hyökkääjä ei siis kykene murtamaan vahvoiksi oletettuja kryptograafisia työkaluja, kuten esimerkiksi julkisen avaimen salausta. Hyökkääjä ei myöskään kykene estämään tai viivyttämään toisten osallistujien lähettämiä viestejä.
-
-Julkisen salauksen avainparin muille osallistujille näkyvää julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. Täten esimerkiksi sillä, että osallistuja lähettää transaktion osoitteestaan tarkoitetaan, että osallistuja lähettää transaktion allekirjoittaen sen yksityisellä avaimellaan, jota vastaa muille näkyvä julkinen osoite. Protokollien kannalta on huomioitavaa, että yksittäinen osallistuja voi generoida itselleen haluamansa määrän avainpareja ja näyttäytyä täten muille osallistujille monina osallistujina.
+%\section{Verkon aika}
+%Tutkielmassa oletetaan, että käsiteltyjä protokollia suoritetaan internetin välityksellä asynkronisessa verkossa. Osallistujat eivät välttämättä jaa yhteistä kelloa ja lähetettyjen viestien välillä voi olla vaihteleva viive. Lohkoketjussa osallistujat jakavat lohkoketjun muodostaman ajan. Lohkoketju pyrkii tuottamaan uusia lohkoja keskimäärin vakioajassa. Järjestelmän aikayksikkönä voidaan käyttää lohkon numeroa. Esimerkiksi Ethereum muodostaa uuden lohkon noin 15 sekunnin välein. Yhteisen ajan myötä protokollaan on mahdollista määritellä aikakatkaisu, jonka kuka tahansa voi laukaista.
 
 \section{Lohkoketju}
 
-Lohkoketju on hajautettu, lupavapaa ja muuttumaton tilikirja. Perinteisesti tilikirjalla tarkoitetaan tilien kokoelmaa, johon on merkitty kaikki tilien olemassaolon aikana tapahtuneet transaktiot. Uutta tietoa on mahdollista lisätä vain tilikirjan loppuun lisäämällä uusia transaktioita. Lohkoketjun tapauksessa tarkoituksena on, että uusia  transaktioita voi lisätä vain luomalla lohkoketjun jatkeeksi uuden lohkon. Yksinkertaistaen, lohko koostuu transaktioista, sekä edellisen lohkon tiivisteestä. Edellisen lohkon tiiviste liittää uuteen lohkoon aikeisemmat transaktiot, muodostaen lohkoketjun. Osallistujat lähettävät transaktioita osoitteestaan allekirjoittamalla transaktion salaisella avaimella, josta osoite on johdettu. Uusi transaktio julkaistaan kaikille osallistujille odottamaan, että ketjun päivittämisestä vastaavat konsensusmekanismia suorittavat osallistujat lisäävät transaktion lohkoketjuun.
+Lohkoketju on hajautettu, lupavapaa ja muuttumaton tilikirja. Perinteisesti tilikirjalla tarkoitetaan tilien kokoelmaa, johon on merkitty kaikki tilien olemassaolon aikana tapahtuneet transaktiot. Uutta tietoa on mahdollista lisätä vain tilikirjan loppuun lisäämällä uusia transaktioita. Lupavapaudella tarkoitetaan, että kuka tahansa voi osallistua tilikirjan päivittämiseen. Lohkoketjun tapauksessa tarkoituksena on, että uusia  transaktioita voi lisätä vain luomalla lohkoketjun jatkeeksi uuden lohkon. Yksinkertaistaen, lohko koostuu transaktioista, sekä edellisen lohkon tiivisteestä. Edellisen lohkon tiiviste liittää uuteen lohkoon aikeisemmat lohkot, muodostaen lohkoketjun. Lohkoketjun käyttäjät lähettävät tiliään koskevia transaktioita allekirjoittamalla transaktion salaisella avaimella, josta tilin osoite on johdettu. Uusi transaktio julkaistaan odottamaan, että ketjun päivittämisestä vastaavat konsensusmekanismia suorittavat käyttäjät lisäävät transaktion lohkoketjuun.
 
- Lupavapauden myötä lohkoketjun osallistujilla pitää olla mekanismi jolla saavutetaan konsensus siitä mikä on ketjun nykyinen validi tila. Osallistujat suorittavat konsensusalgoritmia ketjun nykyisen validin tilan selvittämiseksi ja uusien transaktioiden lisäämiseksi lohkoissa. 
+Lohkoketjun käyttäjillä pitää olla mekanismi jolla saavutetaan konsensus siitä mikä on ketjun nykyinen validi tila. Käyttäjät suorittavat konsensusalgoritmia ketjun nykyisen validin tilan selvittämiseksi ja uusien transaktioiden lisäämiseksi lohkoissa. Tutkielmassa huomioidaan kaksi merkittävintä konsensusmekanismia. Työtodistus (Proof of Work, PoW)-konsensusmekanismia, käyttää kirjoitushetkellä esimerkiksi Bitcoin, sekä Ethereum lohkoketjut. PoW-konsensusta kutsutaan myös Nakamoto-konsensukseksi, jonka tarkempi kuvaus löytyy Bitcoin-valkopaperista \cite{Nakamoto_bitcoin}. Uudempi ja yhä yleistyvä mekanismi on  osakkuustodistus(Proof of Stake, PoS), jonka esimerkkinä toimii esimerkiksi Algorand-lohkoketjun konsensusmekanismi \cite{gilad_algorand_2017}. 
 
-Tutkielmassa huomioidaan kaksi merkittävintä konsensusmekanismia. Työtodistus (Proof of Work, PoW)-konsensusmekanismia, käyttää kirjoitushetkellä esimerkiksi Bitcoin, sekä Ethereum lohkoketjut. PoW-konsensusta kutsutaan myös Nakamoto-konsensukseksi, jonka tarkempi kuvaus löytyy Bitcoin-valkopaperista \cite{Nakamoto_bitcoin}. Uudempi ja yhä yleistyvä mekanismi on  osakkuustodistus(Proof of Stake, PoS), jonka esimerkkinä toimii esimerkiksi Algorand-lohkoketjun konsensusmekanismi \cite{gilad_algorand_2017}. 
-
-\subsection{Proof of Work (PoW)}
+\subsection{Työtodistus}
 PoW-konsensuksessa jokainen konsensukseen osallistuja, joita kutsutaan kaivajiksi (Miner) kilpailee uuden lohkon lisäämisestä.
 
 Kaivaja valitsee uusista transaktioista joukon uutta lohkoa varten ja tarkistaa transaktioiden oikeellisuuden. Transaktiot, edellisen lohkon tiiviste, aikaleima sekä osallistujan valitsema satunnainen arvo (Nonce) syötetään tiivistefunktiolle. Aikaisempien lohkojen perusteella on sovittu vaikeutta kuvaava luku $v$. Jos saadun tiivisteen numeerinen arvo on pienempi kuin $v$ on lohko hyväksyttävä. Tällöin kaivaja julkaisee uuden lohkon verkolle. Muut kaivajat voivat vielä vahvistaa lohkon oikeellisuuden suorittamalla yllä mainitun transaktioiden validoinnin ja tiivisteen laskemisen uudestaan löytäjän parametreilla ja varmistamalla, että saatu tiiviste vastaa löytäjän ilmoittamaa. Kun uusi lohko on validoitu, aloittavat kaivajat prosessin alusta syötteenään uusi transaktioiden joukko, validoidun lohkon tiiviste, aikaleima, sekä nonce. Kaivajat yrittävät aina lisätä uutta lohkoa pisimmän validin ketjun jatkeeksi. 
 
-Löytäjä saa palkkiona uuden lohkon luomisesta vastaluotua valuuttaa, kuten myös transaktiokuluja. Transaktiokulu on transaktion lähettäjän määräämä arvo, joka lisätään lähetettävän arvon päälle, joten kaivajat valitsevat lohkoon transaktioita joissa on suurimmat transaktiokulut. Transaktiokulu suojaa lohkoketjua tyhjiltä transaktioilta, joilla voisi suorittaa palvelunestohyökkäyksen lohkoketjua kohtaan.
+Löytäjä saa palkkiona uuden lohkon luomisesta vastaluotua valuuttaa, kuten myös transaktiokuluja. Transaktiokulu on transaktion lähettäjän määräämä arvo, joka lisätään lähetettävän arvon päälle, joten kaivajat valitsevat lohkoon transaktioita joissa on suurimmat transaktiokulut.
 
 Jos tiiviste ei alakaan halutulla määrällä nollia, kaivaja vaihtaa nonce-arvoa ja laskee tiivisteen uudestaan. Sopivan tiivisteen löytämiseen ei ole tiivisteen alkukuvakestävyyden myötä muuta keinoa kuin yrittää satunnaisia nonce-arvoja. Arvoa $v$ muuttamalla voidaan vaikuttaa siihen kuinka kauan sopivan nonce-arvon löytämisessä kestää keskimäärin tietyllä laskentateholla ja arvo vaihtelee niin, että uusi lohko löydettäisiin keskimäärin aina samassa ajassa. Lohkoketjussa aikaisemmin olevien lohkojen transaktioiden muuttaminen vaatisi, että laskentatyö tehdään uudestaan muutetun sekä kaikkien sitä seuraavien lohkojen kohdalla. Konsensusmekanismi olettaa, että lohkojen luomiseen kohdistuvasta laskentatehosta yli $50\%$ on rehellisten kaivajien hallussa, jolloin lohkoketjun muuttumattomuus on taattu, sillä rehelliset kaivajat kaivavat aina pisintä ketjua.
 
 Tutkielman kannalta kiinnostavaa PoW-konsensusmekanismissa on se, että nonce-arvo, kuten siitä johdettu lohkon tiiviste, ei ole kenenkään ennustettavissa. PoW-lohkoketjujen lohkojen tiivistettä onkin mahdollista käyttää satunnaisuuden lähteenä. Tiivisteen käyttöä satunnaisuuden lähteenä ja siihen liittyviä ongelmia käsitellään luvussa kolme.
 
-\subsection{Proof of Stake (PoS)}
+\subsection{Osakkuustodistus}
 
 % Kuinka validaattorien joukko muodostetaan?
-PoS-konsensusmekanismissa lohkoja tuottaa validaattoreiksi kutsuttu joukko osallistujia. Uuden lohkon tuottaja valitaan validaattoreiden joukosta satunnaisesti ja muut validaattorit vahvistavat luodun lohkon. Paino, joka määrää validaattorin todennäköisyyden tulla valituksi lohkon tuottajaksi ja tärkeyden vahvistettaessa uusia lohkoja määräytyy validaattorin tilin saldon myötä. Osallistuja joka ei ole validaattori voi delegoida oman saldonsa validaattorille palkintoa vastaan. Koska lohkoketjun valuutalla on arvoa, on mekanismissa hyökkääjien omattava mittava määrä taloudellista arvoa, jotta he voivat luoda haluamiaan lohkoja. Onnistunut hyökkäys myös alentaisi valuutan arvoa, haitaten hyökkääjää, joka todennäköisesti hyökkää nimenomaan valuutan arvon takia.
+PoS-konsensusmekanismissa lohkoja tuottaa validaattoreiksi kutsuttu joukko osallistujia. Uuden lohkon tuottaja valitaan validaattoreiden joukosta satunnaisesti ja muut validaattorit vahvistavat luodun lohkon. Paino, joka määrää validaattorin todennäköisyyden tulla valituksi lohkon tuottajaksi ja tärkeyden vahvistettaessa uusia lohkoja määräytyy validaattorin tilin saldon myötä. Osallistuja joka ei ole validaattori voi delegoida oman saldonsa validaattorille palkintoa vastaan. Koska lohkoketjun valuutalla on arvoa, on mekanismissa hyökkääjien omattava mittava määrä taloudellista arvoa, jotta he voivat luoda haluamiaan lohkoja.
 
-Asynkronisessa verkossa konsensuksen taattu saavuttaminen deterministisellä konsensusprotokollalla on mahdotonta, jos edes yksi osallistuja toimii virheellisesti \cite{fischer_impossibility_1985}. PoS-ketjujen konsensusalgoritmit tarvitsevatkin konsensusmekanismissaan hajautettua satunnaisuutta lohkon luojan ja vahvistajien arpomiseen. PoS-ketjun lohkon tiivistettä ei voi kuitenkaan pitää PoW-ketjun lohkon tiivisteen tapaan satunnaisena, sillä lohkon luo yksi validaattori, joka voi vaikuttaa tiivisteeseen.
+Asynkronisessa verkossa konsensuksen taattu saavuttaminen deterministisellä konsensusprotokollalla on mahdotonta, jos edes yksi osallistuja toimii virheellisesti \cite{fischer_impossibility_1985}. PoS-ketjujen konsensusalgoritmit tarvitsevatkin konsensusmekanismissaan hajautettua satunnaisuutta lohkon luojan ja vahvistajien arpomiseen. Joitain tutkielmassa esiteltäviä protokollia voi käyttää myös konsensusmekanismin osana. PoS-ketjun lohkon tiivistettä ei voi kuitenkaan pitää PoW-ketjun lohkon tiivisteen tapaan satunnaisena, sillä lohkon luo yksi validaattori, joka voi vaikuttaa tiivisteeseen.
 
 \section{Lohkoketjusovellus}
 
@@ -73,39 +50,40 @@ Lohkoketjusovelluksella tarkoitetaan sovellusta, jonka ydinlogiikan suoritus tap
 
 Lohkoketjun voi nähdä myös tilakoneena. Jokainen transaktio edistää tilakonetta edellisten lohkojen määrittämän tilan pohjalta. Lohkoketjuun voidaan pelkkien tilien saldojen sijaan tallentaa kokonaisia ohjelmia. Näin lohkoketju toimii Turing-täydellisenä laskenta-alustana ja lohkoketju muodostaa virtuaalikoneen, jolla kuka tahansa voi suorittaa mitä tahansa muuttumatonta laskentaa lupavapaasti.
 
-Tämän idean toteutti ensimmäisenä lohkoketju Ethereum \cite{buterin_ethereum_2014}. Ethereum-l
-Ohjelmia suoritetaan lohkoketjussa pinopohjaisella Ethereum virtuaalikoneella (Ethereum Virtual Machine, EVM). EVM suorittaa tavukoodia, mutta ohjelmia voi kirjoittaa korkean tason ohjelmointikielellä, esimerkiksi Solidity:llä \cite{noauthor_solidity_nodate}. Lohkoketjuun tallennettuja ja suoritettavia ohjelmia kutsutaan älysopimuksiksi (Smart Contract).  Älysopimuksella on osoite ja rajapintoja joita osallistujat kutsuvat transaktiossa edistääkseen älysopimuksen laskentaa, sekä pysyvää muistia, johon sovellus voi tallentaa tilansa, ja mikä on käytettävissä eri transaktioiden välillä. Transaktion lähettäjä maksaa laskennan edistämisestä transaktiokuluna lohkoketjun virtuaalivaluuttaa riippuen laskennan määrästä. Yhden transaktion aikana suoritettavalle laskennan määrälle on myös yläraja. Kirjoittamishetkellä Ethereum-ketjussa sopimuksena määritellyn valuutan, ERC-20 tokenin, siirtäminen osoitteesta toiseen vaati kuluina noin 5.28\$ edestä Ethereum-valuuttaa \cite{etherscanio_ethereum_nodate}. Erityisen kallista on sopimuksen pysyvään muistiin tallentaminen.
+Tämän idean toteutti ensimmäisenä lohkoketju Ethereum \cite{buterin_ethereum_2014}. Ethereum-lohkoketjussa ohjelmia suoritetaan lohkoketjussa pinopohjaisella Ethereum virtuaalikoneella (Ethereum Virtual Machine, EVM). EVM suorittaa tavukoodia, mutta ohjelmia voi kirjoittaa korkean tason ohjelmointikielellä, esimerkiksi Solidity:llä \cite{noauthor_solidity_nodate}. Lohkoketjuun tallennettuja ja suoritettavia ohjelmia kutsutaan älysopimuksiksi (Smart Contract).  Älysopimuksella on osoite ja rajapintoja joita osallistujat kutsuvat transaktiossa edistääkseen älysopimuksen laskentaa, sekä pysyvää muistia, mikä on käytettävissä eri transaktioiden välillä. Transaktion lähettäjä maksaa laskennan edistämisestä transaktiokuluna lohkoketjun virtuaalivaluuttaa riippuen laskennan määrästä. Yhden transaktion aikana suoritettavalle laskennan määrälle on myös yläraja. Kirjoittamishetkellä Ethereum-ketjussa sopimuksena määritellyn valuutan, ERC-20 tokenin, siirtäminen osoitteesta toiseen vaati kuluina noin 5.28\$ edestä Ethereum-valuuttaa \cite{etherscanio_ethereum_nodate}. Erityisen kallista on sopimuksen pysyvään muistiin tallentaminen.
 
-Älysopimusten kanssa vuorovaikuttaminen on osallistujille taloudellisesti kallista, varsinkin jos sopimus on laskennallisesti vaativa. Satunnaisuutta tuottavaan protokollaan, joka suorittaa laskentaa lohkoketjussa, kohdistuu siis vaatimus mahdollisimman pienistä kommunikointikustannuksista. Älysopimuksia tukevissa lohkoketjuissa on viime vuosina tapahtunut merkittävää kehitystä ja jo nyt toiset lohkoketjut mahdollistavat Ethereum-ketjua moninkertaisesti pienemmät kulut. Esimerkiksi kirjoitushetkellä Algorand-lohkoketjun transaktiokulu oli 0.00091\$ arvosta Algorand-virtuaalivaluuttaa \cite{noauthor_algorand_nodate}. Älysopimuslaskennan suuren taloudellisen kustannuksen ongelma ei ole kuitenkaan täysin poistunut erityisesti sovelluksissa, joissa käyttäjien on lähetettävä tuhansia transaktioita.
+Älysopimusten kanssa vuorovaikuttaminen on käyttäjille taloudellisesti kallista, varsinkin jos sopimus on laskennallisesti vaativa. Satunnaisuutta tuottavaan protokollaan, joka suorittaa laskentaa lohkoketjussa, kohdistuu siis vaatimus mahdollisimman pienistä kommunikointikustannuksista. Älysopimuksia tukevissa lohkoketjuissa on viime vuosina tapahtunut merkittävää kehitystä ja jo nyt toiset lohkoketjut mahdollistavat Ethereum-ketjua moninkertaisesti pienemmät kulut. Esimerkiksi kirjoitushetkellä Algorand-lohkoketjun transaktiokulu oli 0.00091\$ arvosta Algorand-virtuaalivaluuttaa \cite{noauthor_algorand_nodate}. Älysopimuslaskennan suuren taloudellisen kustannuksen ongelma ei ole kuitenkaan täysin poistunut erityisesti sovelluksissa, joissa käyttäjien on lähetettävä tuhansia transaktioita.
 
-Vaikka lohkoketju onkin lupavapaa, voidaan älysopimuksena toteutetun protokollan osallistujat lukita esimerkiksi protokollan yhden suorituksen ajaksi.
+\section{Lohkoketjusovelluksen käyttäjät}
 
-\section{Protokollan vaatimukset}
+Satunnaislukuja tarvitsevaan lohkoketjusovellukseen oletetaan osallistuvan $N$ käyttäjää, $N > 1$, joista jokaisella on käytössään julkisen avaimen salauksen avainpari, jonka mahdollistamilla allekirjoituksilla käyttäjä osoittaa identiteettinsä. Julkista avainta voidaan kutsua tutkielmassa lohkoketjuympäristössä myös nimellä \textit{tili} tai \textit{osoite}. Täten esimerkiksi sillä, että käyttäjä lähettää transaktion osoitteestaan tarkoitetaan, että käyttäjä lähettää transaktion allekirjoittaen sen yksityisellä avaimellaan, jota vastaa muille näkyvä julkinen osoite.  Satunnaisuutta tuottavien protokollien kannalta on huomioitavaa, että yksittäinen käyttäjä voi generoida itselleen haluamansa määrän osoitteita ja näyttäytyä täten muille osallistujille monina erillisinä käyttäjinä.
 
-Protokolla voi toimia lohkoketjusovelluksen sisällä, esimerkiksi lottoarvonnan osallistujat voivat generoida itse voittajan määräävän satunnaisluvun. Protokolla voi toimia myös yksittäisenä sovelluksen, esim älysopimuksena, jonka satunnaisuutta muut sovellukset käyttävät. Tällöin protokolla toimii kolmannen osapuolen satunnaisuuden majakkana (Randomness Beacon).
+Lohkoketjusovelluksen lupavapauden myötä sovellusta voi käyttää myös haitalliset käyttäjät, jotka haluavat esimerkiksi lähettää itseään hyödyntäviä transaktioita. Haitallisia käyttäjiä kutsutaan myös hyökkääjiksi. Hyökkääjän laskentatehon oletetaan olevan korkeintaan polynomisesti suurempi kuin rehellisten osallistujien. Hyökkääjä ei siis kykene murtamaan vahvoiksi oletettuja kryptograafisia työkaluja, kuten esimerkiksi julkisen avaimen salausta. Hyökkääjä ei myöskään kykene estämään, viivyttämään tai väärentämään toisten osallistujien lähettämiä transaktioita. Haitallisiin käyttäjiin lasketaan myös osallistujat, jotka kohtaavat teknisiä ongelmia, jotka estävät käyttäjää lähettämästä transaktioita. Rehellinen osallistuja lähettää aina protokollan vaatimia transaktioita.
 
-Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset joihin peilaten protokollaa analysoidaan:
+\section{Satunnaisuuden vaatimukset}
+
+Lohkoketjusovellus voi saada satunnaisuutensa kolmannelta osapuolelta tai sovellus voi toteuttaa itse protokollan jolla tuottaa satunnaisuutta. Esimerkiksi lottoarvonnan osallistujat voivat generoida itse voittajan määräävän satunnaisluvun. Protokolla voi toimia myös yksittäisenä sovelluksena, esim älysopimuksena, jonka satunnaisuutta muut sovellukset käyttävät. Tällöin protokolla toimii kolmannen osapuolen satunnaisuuden majakkana (Randomness Beacon).
+
+Protokollan tuottamiin satunnaislukuihin kohdistetaan seuraavat vaatimukset jotka protokollan on vähintään täytettävä:
 \begin{enumerate}
-    \item Protokollan generoimat satunnaisluvut noudattavat satunnaisjakaumaa.
+    \item Yksittäisen osallistujan ei ole mahdollista estää protokollaa tuottamasta satunnaislukua.
     \item Protokollan generoimia satunnaislukuja ei voi ennustaa.
-    \item On julkisesti todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
-    \item Generoitava satunnaisluku ei ole kenenkään manipuloitavissa.
+    \item On julkisesti todennettavissa, että protokollan tuottamat satunnaisluvut on tuotettu protokollaa noudattaen.
+    \item Tuotettava satunnaisluku ei ole kenenkään manipuloitavissa.
 \end{enumerate}
 
-Tutkielmassa läpikäytävien protokollien pääpaino on vaatimuksissa 2, 3 ja 4 lohkoketjun lupavapauden myötä. 
-Sillä osallistujan ei voida luottaa toimivan protokollan mukaisesti, niin vaikka protokollan tuottamat satunnaisluvut ideaalitilanteessa noudattaisivatkin satunnaisjakaumaa, on hyvä vaatia, että kukaan, osallistuja tai ulkopuolinen, ei kykene ennustamaan lukuja tai vaikuttamaan niihin.
+Vaatimukset perustuvat aikaisemman tutkimuksen esittämiin vaatimuksiin \cite{cherniaeva2019homomorphic, schindler_hydrand_2020, syta_scalable_2017}. 
 
-Julkisella todennettavuudella varmistetaan, että tuotetun luvun käyttäjä voi varmistua siitä, että luku on tuotettu nimenomaisella protokollalla. Tämä on erityisen tärkeää kun protokolla toimii majakkana. Muuten hyökkääjä voi esimerkiksi esittää majakkaa, mikä ei vaadi osallistumista itse generoimiseen.
+Tutkielmassa oletetaan, että jokaisella osallistujalla on käytössään satunnaisuuden lähde, jota toiset osallistujat eivät voi ennustaa tai manipuloida. Rehellinen osallistuja käyttää aina tätä lähdettä, kun tältä kysytään protokollassa satunnaista syötettä.
 
-Tutkielmassa oletetaan, että jokaisella osallistujalla on käytössään vaatimukset 1-4 täyttävä satunnaisuuden lähde. Rehellinen osallistuja käyttää aina tätä lähdettä, kun tältä kysytään protokollassa satunnaista syötettä. Hyökkääjä ei voi vaikuttaa toisten osallistujien satunnaisuuden lähteisiin, eikä ennustaa niiden toimintaa.
-
-Vaatimusten lisäksi seuraavilla protokollan ominaisuuksilla on merkitystä protokollan käytettävyyden kannalta:
+Vaatimusten lisäksi seuraavilla protokollan ominaisuuksilla on merkitystä protokollan käytettävyyden ja käytännön toteutuksen kannalta:
 
 \begin{enumerate}
-    \item Mikä määrä $t$ protokollan osallistujista $t < N$ voi olla haitallisia, niin että protokolla kuitenkin tuottaa vaatimusten 1, 2, 3 ja 4 mukaisen luvun?
+    \item Mikä määrä $t$ protokollan osallistujista $t \leq N$ voi olla haitallisia, niin että protokolla kuitenkin tuottaa vaatimusten 1, 2, 3 ja 4 mukaisen luvun?
     \item Mikä on yksittäisen osallistujan kommunikointikompleksisuus? Esim $O(N)$.
+    \item Kestääkö protokolla Sybil hyökkäyksiä?
 \end{enumerate}
 
 Kommunikointikompleksisuudella tarkoitetaan tutkielman tapauksessa sitä kuinka monta transaktiota protokollan yksittäinen osallistuja joutuu lähettämään osallistuakseen yhden satunnaisluvun tuottamiseen. 
 
-%TODO SYBIL SELITYS
+Sybil hyökkäyksellä \cite{douceur2002sybil} tarkoitetaan hyökkäystä, jossa yksi käyttäjä esiintyy järjestelmässä monella identiteetillä. Yhden käyttäjän luomat identiteetit näyttäytyvät muille käyttäjille erillisinä käyttäjinä. Lohkoketjusovellus on lupavapaa ja käyttäjän identifioi vain osoite, joita yksittäinen käyttäjä voi generoida haluamansa määrän. Jos lohkoketjusovellukseen, joka toteuttaa esimerkiksi satunnaisuutta tuottavan protokollan, voi liittyä vain transaktiokulun hinnalla, voi sovellus olla altis Sybil hyökkäykselle. Jos sovellus ei ole altis Sybil hyökkäykselle sanotaan, että sovellus on Sybil resistentti. Yksinkertainen tapa parantaa lohkoketjusovelluksen Sybil kestävyyttä on vaatia osallistujilta vakuutena kryptovaluuttaa liittymisen yhteydessä, jolloin uusien identiteettien luominen on kallista.

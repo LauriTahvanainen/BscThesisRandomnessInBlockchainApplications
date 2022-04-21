@@ -2,10 +2,10 @@
 
 
 
-Taulukkoon~\ref{table:results}, on koottu käsiteltyjä vaatimukset 1-4 täyttäviä protokollia. Vaatimukset täyttyvät vaihtelevin oletuksin, jotka on merkitty taulukkoon. Taulukossa on myös protokollan soveltamisen kannalta merkittäviä huomioita. Taulukossa on protokollan nimi, tekstimuotoisia huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset, sekä tieto siitä onko protokolla lohkoketjuympäristössä sybil resistentti.
+Taulukkoon~\ref{table:results}, on koottu käsiteltyjä metodeja, joilla lohkoketjusovellus saa hyödynnettäväkseen satunnaisuutta. Taulukossa on myös protokollan soveltamisen kannalta merkittäviä huomioita. Taulukossa on protokollan nimi, tekstimuotoisia huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset, sekä tieto siitä onko protokolla lupavapaassa lohkoketjuympäristössä Sybil resistentti. Ei Sybil resistentit protokollat vaativat käytännön toteutuksessaan mekanismin Sybil hyökkäyksen torjumiseen, jotta toteutus täyttää vaatimukset 1-4.
 
-\begin{table}[h]
-    \caption{Vaatimukset 1-4 täyttävät protokollat}
+\begin{table}[ht]
+    \caption{Metodeja satunnaisuuden saamiseen lohkoketjusovellukseen}
     \label{table:results}
     \begin{tabular}{  l  p{4cm}  p{2.5cm} p{2cm} p{4cm}}
         \toprule
@@ -15,6 +15,11 @@ Taulukkoon~\ref{table:results}, on koottu käsiteltyjä vaatimukset 1-4 täyttä
 & \textbf{Kustannus}
 & \textbf{Hyökkääjiä} 
 & \textbf{Sybil resistentti} \\
+Chainlink VRF 
+& Maksaa Chainlink virtuaalivaluuttaa. Valmis älysopimus rajapinta.
+& $O(1)$ Gen.
+& $N$
+& Kyllä  \\\hline
 Lohkon tiiviste + VDF 
 & VDF turvallisen viiveen määrittely. Kaksi transaktiota, lohkonumeron päättäminen ja VDF:n tuloste. Yksinkertaisin On-chain toteutus.
 & $O(1)$ Konf. $O(1)$ Gen.
@@ -29,27 +34,27 @@ PVSS
 & Korkea kommunikointikustannus. Monimutkainen toteutus.
 & $O(N^2)$
 & $N/2 - N/3$  
-& Kyllä \\\hline
+& Ei \\\hline
 Merlin-ketju
 & Kuinka toimia tuottajien kanssa, jotka eivät paljasta Merlin-ketjun arvoaan? Merlin-ketjun varmuuskopiointi.
 & $O(1)$ Konf. $O(1)$ Gen. 
 & $N-1$ 
-& Kyllä  \\\hline
+& Ei, vain manipuloitavissa  \\\hline
 Caucus
 & Samat kuin Merlin-ketjun kanssa. Olemassaoleva älysopimustoteutus. Pienempi pysähtymisriski verrattuna Merlin-ketjuun.
 & $O(N^2)$ Konf. $O(1)$ Gen. 
 & $N-1$ 
-& Ei PVSS konfiguroinnilla \\\hline
+& Vakuustalletus \\\hline
 Homomorfinen salaus
 & Vaativa off-chain laskentaan nojaava toteutus. Osittain valmis toteutus saatavilla.
 & $O(N)$ Konf. $O(1)$ Gen. 
 & $N/3$
-& Ei  \\\hline
+& Ei  \\
         \bottomrule
 
     \end{tabular}
 \end{table}
 
-Tiivisteen ja kommitoinnin protokollat VDF:n kanssa soveltuvat erityisesti arvontatyylisiin lohkoketjusovelluksiin. Tiivisteen käyttäminen aiheuttaa yksittäiselle osallistujalle pienimmän kommunikaatiokompleksisuuden, sillä osallistujan tarvitsee vain liittyä protokollaan yhdellä transaktiolla. Kommitoinnissa osallistujan täytyy liittyä protokollaan ja kommitoida arvo, mitkä voidaan tehdä samassa transaktiossa, mutta transaktio on silti kalliimpi toteuttaa kuin tiivisteen käyttämisen tapauksessa.
 
-VDF:n käyttämistä sovelluksissa vaikeuttaa käyttäjien ja mahdollisten hyökkääjien suuret erot laitteistojen tehokkuudessa. Viive tulisi voida valita niin, että protokolla on turvallinen tehokkaimpia laitteita vastaan, mutta kuitenkin niin, että rehellinen käyttäjä voi evaluoida funktion sovelluksen käyttötarkoituksen mukaisessa ajassa.
+
+% Mitkä toteutettavissa PoS ketjussa?
