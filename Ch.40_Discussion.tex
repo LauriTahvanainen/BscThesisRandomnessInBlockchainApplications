@@ -1,16 +1,16 @@
 \chapter{Analyysi\label{discussion}}
 
+Satunnaisuuden tuottamiseksi lohkoketjusovellukseen on monta keinoa, kuten myös lohkoketjusovelluksilla on monia eriäviä vaatimuksia. Lohkoketjusovellusten erilaiset vaatimukset tekevätkin satunnaisuutta tuottavien menetelmien vertailusta haastavaa eikä käsitellyistä menetelmistä löydy kaikkiin tilanteisiin sopivaa tapaa. Tässä luvussa vertaillaan tutkielmassa esiteltyjä menetelmiä ottaen huomioon niiden soveltuvuus erilaisiin lohkoketjusovelluksiin.
 
-
-Taulukkoon~\ref{table:results}, on koottu käsiteltyjä metodeja, joilla lohkoketjusovellus saa hyödynnettäväkseen satunnaisuutta. Taulukossa on myös protokollan soveltamisen kannalta merkittäviä huomioita. Taulukossa on protokollan nimi, tekstimuotoisia huomioita, arvio protokollan konfiguroinnin ja yhden satunnaisluvun generoimisen kommunikaatiokompleksisuudesta, määrä joka osallistujista voi olla hyökkääjiä, niin että protokolla täyttää vaatimukset, sekä tieto siitä onko protokolla lupavapaassa lohkoketjuympäristössä Sybil resistentti. Ei Sybil resistentit protokollat vaativat käytännön toteutuksessaan mekanismin Sybil hyökkäyksen torjumiseen, jotta toteutus täyttää vaatimukset 1-4.
+Taulukkoon~\ref{table:results}, on koottu käsiteltyjä menetelmiä, joilla lohkoketjusovellus saa hyödynnettäväkseen satunnaisuutta. Taulukossa on menetelmän nimi, tekstimuotoisia huomioita, arvio menetelmän konfiguroinnin ja yhden satunnaisluvun tuottamisen kommunikaatiokompleksisuudesta, määrä joka käyttäjistä voi olla hyökkääjiä, niin että menetelmä täyttää vaatimukset, sekä tieto siitä onko menetelmä lupavapaassa lohkoketjuympäristössä Sybil resistentti. Ei Sybil resistentit menetelmät vaativat käytännön toteutuksessaan mekanismin Sybil hyökkäyksen torjumiseen, jotta toteutus täyttää vaatimukset 1-4.
 
 \begin{table}[ht]
-    \caption{Metodeja satunnaisuuden saamiseen lohkoketjusovellukseen}
+    \caption{Menetelmiä satunnaisuuden saamiseen lohkoketjusovellukseen}
     \label{table:results}
-    \begin{tabular}{  l  p{4cm}  p{2.5cm} p{2cm} p{4cm}}
+    \begin{tabular}{  l  p{4cm}  p{2.5cm} p{2cm} p{3.5cm}}
         \toprule
 
-\textbf{Protokolla}      
+\textbf{Menetelmä}      
 & \textbf{Huomioitavaa}
 & \textbf{Kustannus}
 & \textbf{Hyökkääjiä} 
@@ -32,7 +32,7 @@ Kommitointi + VDF
 & Kyllä  \\\hline
 PVSS        
 & Korkea kommunikointikustannus. Monimutkainen toteutus.
-& $O(N^2)$
+& $O(N)$
 & $N/2 - N/3$  
 & Ei \\\hline
 Merlin-ketju
@@ -42,19 +42,37 @@ Merlin-ketju
 & Ei, vain manipuloitavissa  \\\hline
 Caucus
 & Samat kuin Merlin-ketjun kanssa. Olemassaoleva älysopimustoteutus. Pienempi pysähtymisriski verrattuna Merlin-ketjuun.
-& $O(N^2)$ Konf. $O(1)$ Gen. 
-& $N-1$ 
+& $O(N)$ Konf. $O(1)$ Gen. 
+& $N/2 - N/3$ Konf. $N-1$ Jälkeen 
 & Vakuustalletus \\\hline
 Homomorfinen salaus
 & Vaativa off-chain laskentaan nojaava toteutus. Osittain valmis toteutus saatavilla.
 & $O(N)$ Konf. $O(1)$ Gen. 
 & $N/3$
 & Ei  \\
-        \bottomrule
+        %\bottomrule
 
     \end{tabular}
 \end{table}
 
+Yksinkertaisin menetelmä on käyttää pelkkää lohkon tiivistettä. EVM-ympäristössä sen käyttö tapahtuu yhdellä Solidity-kielen funkiokutsulla \cite{noauthor_solidity_nodate}. Vaikka toteutus ei ole turvallinen, niin monelle lohkoketjusovellukselle se voi olla riittävän turvallinen. Menetelmä voi sopia esimerkiksi pienille sovelluksille, jotka eivät käsittele taloudellista arvoa, sekä sovelluksille joissa käyttäjä joutuu suorittamaan jonkinlaisen identifioinnin tai käyttäjien joukko on suljettu ja ennalta tiedossa. Lohkon tiivistettä käyttävät sovellukset hyötyvät siitä, että muutkin sovellukset käyttävät tiivistettä. Tuhansia tiivistettä käyttävää sovellusta ei ole mahdollista manipuloida samanaikaisesti.
 
+Chainlink VRF, Homomorfinen salaus, Caucus ja Merlin-ketju ovat menetelmiä joista on älysopimustoteutus vaikkakin Merlin-ketjun älysopimustoteutusta ei löytynyt kirjoitushetkellä. Vaikka nämä menetelmät ovatkin selvästi tiivisteen käyttämistä monimutkaisempia, niin ne ovat turvallisempia ja valmiit toteutukset helpottavat niiden käyttöönottoa. Chainlink VRF on valmiit älysopimusrajapinnat \cite{noauthor_chainlink_nodate}, mutta sovelluksen pitää kehittää malli palvelun rahoittamiseksi jotta se voi tilata satunnaislukuja. VDF:n käytännön toteutuksessa suurin haaste on itse viivefunktion toteuttamisessa niin, että laitteistoerojen merkitys saadaan mahdollisimman pieneksi. PVSS menetelmän satunnaisluvun tuottamisesta ei löytynyt valmista lohkoketjusovellukseen sovellettua toteutusta eikä toteutus ole triviaali.
+
+Menetelmästä riippumatta käyttäjän pitää lähettää vähintään yksi transaktio osallistuakseen lohkoketjusovellukseen. Chainlink VRF, lohkon tiiviste VDF:llä sekä Caucus ovat menetelmiä, joissa yhden satunnaisluvun tuottamiseksi vaaditaan liittymisen lisäksi vain yksi transaktio keneltä tahansa osallistujalta. Merlin-ketjua hyödyntävä menetelmä vaatii jokaiselta käyttäjältä kommitointitransaktion liittymisen lisäksi, kuten myös kommitointi VDF:n kanssa. Homomorfinen salaus vaatii t+1 käyttäjältä yhden transaktion salauksen purkamiseksi. 
+
+Homomorfisessa salauksessa, sekä Caucuksessa konfiguroinnilla on O(N) kompleksisuus. Vaikka konfiguroinnin kustannus on suuri varsinkin isoihin sovelluksiin, niin menetelmiä voidaan käyttää myös suuremman käyttäjämäärän sovelluksissa sillä konfigurointi tapahtuu vain kerran. PVSS taas ei skaalaudu suuren käyttäjämäärän sovelluksiin sillä yksittäisen satunnaisluvun tuottamisen kompleksisuus on O(N). Muiden menetelmien konfigurointikustannus on vakio. Pienestä konfigurointikustannuksesta on hyötyä esimerkiksi jos sovellus tarvitsee olemassaolonsa aikana vain yhden satunnaisluvun.
+
+Chainlink VRF ja lohkon tiiviste VDF:n kanssa eivät riipu sovelluksen käyttäjistä, joten ne kestävät N haitallista sovelluksen käyttäjää. Kommitointi VDF:n kanssa, Merlin-ketju ja Caucus tuottavat satunnaisen luvun kunhan vähintään yksi käyttäjä on rehellinen. Caucus tosin vaatii esimerkiksi PVSS konfiguroinnin, mikä kestää parhaillaan $N/2$ hyökkääjää. Homomorfinen salaus joutuu myös tekemään oletuksen maksimissaan $N/3$ hyökkääjästä.
+
+Homomorfista salausta ja PVSS:ää käyttävät menetelmät ovat erityisen alttiita Sybil hyökkäyksille jos sovelluksen käyttäjäksi liittyminen on halpaa suhteessa hyökkäyksellä saavutettaviin voittoihin. Molemmissa hyökkääjä voi saada helposti oletusta suuremman osan jaetuista salaisuuksista, minkä seurauksena hyökkääjä voi ennustaa satunnaisen arvon. Menetelmien Sybil resistenssiä pitää parantaa jos kyseisiä menetelmiä halutaan käyttää lohkoketjusovelluksessa, mikä lisää käytännön toteutuksen monimutkaisuutta. Merlin-protokollaa kohti voi kohdistaa vain lievemmän Sybil hyökkäyksen, jolla voi manipuloida arvoja. Chainlink VRF, ja VDF:n eri käyttötapojen tapauksessa riskiä Sybil hyökkäykselle ei ole, vaikkakin Chainlink VRF:n tapauksessa sovellus luottaa Chainlink verkkoon, ja että se ei ole altis Sybil hyökkäykselle.
+
+Caucus protokollassa on käytössä vakuustalletus \cite{Caucus}. Tämä on yksi tapa parantaa Sybil resistenssiä. Vakuustalletuksen käyttäminen ei kuitenkaan tee protokollasta täysin Sybil resistenttiä ja talletuksen koon määrittäminen on vaikeaa. Mitä suurempi talletus on, sitä korkeamman taloudellisen riskin hyökkäyksiä sovellus kestää, mutta korkea vakuus rajaa käyttäjien joukkoa pienemmäksi, sillä kaikilla käyttäjillä ei ole varaa suureen vakuuteen. Tehokas tapa satunnaisuutta tuottavien protokollien ja niitä käyttävien lohkoketjusovellusten Sybil resistenssin lisäämiseen on käyttää rekisteriä, joka liittää osoitteeseen luonnollisen henkilön. Rekisterin rakentaminen ei ole kuitenkaan triviaalia lohkoketjussa. Ethereum ketjussa esimerkkinä toimii hajautettu Proof of Humanity\footnote{https://www.proofofhumanity.id/} rekisteri. Lohkoketjusovelluksen Sybil resistenssin parantaminen on aihe, joka vaatii lisää tutkimusta.
+
+Chainlink VRF ja lohkon tiivisteen käyttäminen ilman VDF:ää eivät vaadi Off-chain laskentaa, minkä myötä käytännön toteutus on yksinkertaisempi verraten muihin menetelmiin. Tiivisteketjua hyödyntävissä protokollissa pitää päättää kuinka käyttäjän tiivisteketju varmuuskopioidaan. Tämä vaatii Off-chain toteutuksen jos varmuuskopiointia ei jätetä täysin käyttäjän vastuulle. VDF, PVSS ja homomorfisen salauksen tapauksessa toteutettavana on kryptografista Off-chain laskentaa. Toteutukset vaativat muun muassa salaisten osien hallinnan ja validointien toteuttamisen käyttäjän laitteella. Käyttäjän on pystyttävä validoimaan protokollan suoritus laitteellaan.
+
+Pelkän lohkon tiivisteen ja Chainlink VRF:n käyttäminen soveltuvat parhaiten reaaliaikaisiin sovelluksiin, joissa satunnaisluku pitää saada nopeasti. Käyttäjien syötteeseen nojaavien protokollien on määriteltävä jokin viive kauan käyttäjien on mahdollista syöttää satunnaisuuttaan. Tämän viiveen määrittely ei ole kuitenkaan helppoa, sillä liian lyhyt viive saattaa rankaista rehellisiä käyttäjiä, joilla on esimerkiksi hidas yhteys. Liian pitkä viive satunnaisuuden tuottamisessa taas ei välttämättä sovellu reaaliaikaiseen sovellukseen. VDF taas itsessään nojaa viiveeseen turvallisen toiminnan takaamiseksi, eikä satunnaislukua saada yhtä nopeasti kuin esimerkiksi lohkon tiivisteen tapauksessa.
+
+% Off-chain vaatimukset
 
 % Mitkä toteutettavissa PoS ketjussa?
