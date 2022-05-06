@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\title{ Satunnaislukujen generoiminen lohkoketjusovelluksissa \\\small{Essee}}
+\author{Lauri Tahvanainen}
+\usepackage[finnish]{babel}
+\begin{document}
+\maketitle
+
+\section{Johdanto}
+
+Satunnaisuuden generoiminen on kriittinen ongelma monissa hajautetuissa järjestelmissä. Turvalliselle kommunikoinnille elintärkeän julkisen salauksen avaimien generoiminen on riippuvainen satunnaisuudesta\cite{corrigan-gibbs_ensuring_2014}. Lohkoketju on hajautettu järjestelmä joka kohtaa yleisten hajautettujen järjestelmien kohtaamien ongelmien lisäksi lohkoketjuille ominaisia ongelmia. Toisaalta lohkoketjujen kohtaamiin ongelmiin tuotetut ratkaisut ovat sovellettavissa yleisesti muissa hajautetuissa järjestelmissä. 
+
+Satunnaisuuden generointia on kuvailtu yhdeksi tärkeimmistä lohkoketjuteknologian kohtaamista teknisistä ongelmista. \cite{noauthor_hard_nodate}.  Luotettavalla satunnaislukujen generoimisen protokollalla on lohkoketjuympäristössä sovelluksia niin ketjun konsensusprotokollan tasolla, kuin ketjun sovellustasolla. Konsensusprotokollan tasolla satunnaisuutta käytetään esimerkiksi uusien lohkojen valitsijan valintaan \cite{chen_algorand_2017}. Lohkoketjun sovellustasolla satunnaisuutta vaaditaan esimerkiksi hajautettuja lottoarvontoja toteuttavassa sovelluksessa \cite{pooltogether_pooltogether_nodate} tai tuomarien valinnassa hajautetun tuomioistuimen toteuttavassa sovelluksessa \cite{lesaege_kleros_2020}. Seuraavaksi satunnaislukujen generoimisen ongelma lohkoketjusovelluksissa määritellään tarkemmin, minkä jälkeen esitellään valittuja protokollia, jotka yrittävät tarjota ratkaisun ongelmaan.
+
+\section{Määrittely}
+
+Lohkoketjusovelluksella tarkoitetaan sovellusta, jonka ydinlogiikan suoritus tapahtuu lohkoketjun solmuissa, eli sovellusta suoritetaan lohkoketjun protokollan mukaisessa hajautetussa verkossa. Sovelluksen tila tallennetaan lohkoketjun hajautettuun tietokantaan. Esimerkiksi älysopimuksista koostuva, Ethereum\cite{ethereum_foundation_ethereum_nodate}
+ lohkoketjussa suoritettava, sovellus on esimerkki lohkoketjusovelluksesta. Yksi lohkoketjusovelluksen ominaispiirre on lupavapaus, joka tarkoittaa, että kuka tahansa voi kommunikoida sovelluksen kanssa. Sovelluksia tukevan lohkoketjualustan tavoitteena on usein myös, että sovelluksia ei voida sensuroida, tarkoittaen, että sovellusten suorittamista ei voi estää mikään yksittäinen toimija.
+Lohkoketjun lupavapaa luonne vaatii satunnaislukujen generoimisen protokollan olevan hajautettu, manipuloimaton, ennustamaton ja julkisesti todennettavissa.
+
+Tässä tapauksessa satunnaislukujen generoimisen ongelma rajataan tarkemmin seuraavasti:
+Yhden satunnaisluvun generoimiseen osallistuu $N$ osallistujaa,  $N > 2$. Lohkoketjuympäristössä jokaisella osallistujalla on lohkoketjussa käytettävän asymmetrisen salausmenetelmän tuottamat julkinen avain P ja yksityinen avain S, joiden avulla on vahvistettavissa, että tietty viesti on tietyn osallistujan lähettämä. Kuka tahansa voi liittyä generointiprotokollaan ennen protokollan suorittamisen aloittamista, mutta uusia osallistujia ei voi liittyä kesken protokollan suorittamisen. Tilanne vastaa monen sovelluksen käyttötapausta, kuten esimerkiksi lottoarvonnan. Kun arvonta alkaa, ei uusia osallistuja voi enää liittyä. Generoitu satunnaisluku julkaistaan lohkoketjuun. 
+
+Protokollan generoimiin satunnaislukuihin kohdistetaan seuraavat vaatimukset \cite{simic_review_2020}:
+\begin{itemize}
+    \item[--] 1: Protokollan generoimat satunnaisluvut noudattavat satunnaisjakaumaa
+    \item[--] 2: Protokollan generoimia satunnaislukuja ei voi ennustaa
+    \item[--] 3: On julkisesti todennettavissa, että protokollan generoimat satunnaisluvut on generoitu protokollaa noudattaen.
+    \item[--] 4: Generoitava satunnaisluku ei ole kenenkään manipuloitavissa
+\end{itemize}\textbf{}
+Käyttötarkoituksesta riippuen voidaan vaatia, että:
+
+\begin{itemize}
+    \item[--] 5: Jos protokollaa suorittaa vähintään 1 rehellinen osallistuja, ei protokollaa voi estää generoimasta satunnaislukua.
+    \item[--] 6: Protokollan suorittamiseen kuluu aikaa enintään t.
+    \item[--] 7: Yksittäisen osallistujan kommunikointikompleksisuus on enintään x, esim. O(n)
+\end{itemize}
+
+\section{Olemassaolevat protokollat}
+
+\subsection{Ulkoiset ratkaisut}
+Käydään läpi olemassaolevia protokollia satunnaislukujen generoimiseen lohkoketjusovelluksen näkökulmasta. 
+
+Monet lohkoketjusovellukset eivät toteuta omaa protokollaa satunnaislukujen generoimiseen, vaan käyttävät ulkoista satunnaislukujen lähdettä. Yleisin näistä on lohkon hajautusarvon käyttäminen satunnaisena arvona. Hajautusarvo on lohkon tunnistava merkkijono, joka on saatu syöttämällä hajautusfunktiolle lohkon sisältämiä tietoja, joita ovat esimerkiksi lohkossa suoritetut transaktiot, lohkonumero, edellisen lohkon hajautusarvo sekä aika. Lohkon hajautusarvo täyttää vaatimukset 1-3, mutta lohkon luojat voivat vaikuttaa arvoon, joten luku on manipuloitavissa, eikä täytä vaatimusta 4. Jos lohkon tuottajan saama hyöty epäedullisen hajautusarvon omaavan lohkon julkaisematta jättämisestä on suurempi kuin lohkon julkaisemisesta saatava palkinto, on lohkontuottajalla intressi jättää lohko julkaisematta. Tämä aiheuttaa vinouman satunnaislukujen jakaumaan lohkontuottajalle hyödylliseen suuntaan.
+
+
+\subsection{Kommitointi ja paljastaminen}
+Kommitoinnin ja paljastamisen protokollassa satunnaisluku generoidaan kahdessa osassa. Ensimmäisellä kierroksella jokainen osallistuja kommitoi ensin kaikkien nähtäväksi salatun satunnaisluvun. Toisella kierroksella osallistujat paljastavat yksi kerrallaan kommitoidunsa satunnaisluvun. Paljastetut satunnaisluvut yhdistetään, minkä seurauksena saadaan satunnaisluku. Olettaen, että vähintään yksi osallistuja on rehellinen, tämä protokolla täyttää vaatimukset 2, 3 ja 4 \cite{simic_review_2020}. Ongelmana protokollassa on, että viimeinen paljastaja näkee generoidun satunnaisluvun ja voi täten olla julkaisematta syötettään, jos generoitu luku ei ole suosiollinen \cite{simic_review_2020}.
+
+Yksi tapa estää viimeisen paljastajan manipulointi on käyttää salaisuuden jakamista. (t, n)-salaisuuden jakaminen (SS) on tekniikka, jolla salaisuuden s jakaja voi jakaa n osallistujalle salaisuuden, niin, että mikä tahansa t osallistujan joukko voi rekonstruktuoida salaisuuden kun toisaalta mikä tahansa joukko kooltaan pienempi kuin t ei saa minkäänlaista tietoa salaisuudesta\cite{syta_scalable_2017}. Julkisesti todennettavassa salaisuuden jakamisessa (PVSS) jakajan jakamat salaisuuden osuudet on todennettavissa valideiksi paljastamatta osuuksia tai salaisuutta. Esimerkkinä VSS käytöstä kuvataan tiivistetysti RandShare-protokolla\cite{syta_scalable_2017}. Käytettäessä julkisesti todennettavissa olevaa (t, n)-salaisuuden jakamista generointiprotokollassa tehdään oletus, että $N = 3t+1$ osallistujasta enintään t-1 osallistujaa on epärehellisiä. Tällöin protokollassa jokainen osallistuja jakaa ensin oman salaisen syötteensä t osaan VSS metodia käyttäen, ja lähettää osat muille osallistujille. Kun kaikilla osallistujilla on muiden osallistujien osat ja ne on vahvistettu, julkaistaan osat kaikille osallistujille. Osallistuja voi rekonstruktuoida toisen osallistujan salaisuuden jos hän on vastaanottanut vähintään t osaa. Siis epärehellinen osallistuja ei voi estää salaisuutensa julkaisemista, sillä oletuksen mukaan rehellisiä osallistujia on $2t+2$, mikä riittää siihen, että rehellisten osallistujien julkaistessa osansa, on rehellisillä osallistujilla vähintään t osaa jokaisesta salaisuudesta ja kaikki salaisuudet julkaistaan. 
+
+Tämä protokolla täyttää oletuksien rajoissa kriteerit 1-4, mutta esimerkiksi kommunikaatiokompleksisuus on $O(n^3)$\cite{syta_scalable_2017}, mikä on liian suuri moneen lohkoketjusovellukseen.
+
+\subsection{Peräkkäinen työtodistus(Proof of Work)}
+Työtodistuksella tarkoitetaan arvoa, josta voidaan (tehokkaasti) todistaa, että arvon hankkimisen eteen on tehty tietty määrä työtä. Esitellään peräkkäistä työtodistusta käyttävä satunnaislukujen generoimisen protokolla\cite{lesaege_kleros_2020}. Jokainen osallistuja syöttää ensin yhteiseen siemenarvoon oman arvonsa. Sitten jokainen osallistuja laskee rekursiivisesti hajautusarvon tästä siemenarvosta h kertaa, tallentaen välituloksia. $h$ on ennalta sovittu vaikeusaste. Viimeinen hajautusarvo h toimii tässä tapauksena työtodistuksena. Tätä laskutoimitusta ei voi rinnakkaistaa, ja sille on jokin teoreettinen ajallinen alaraja. Ensimmäinen viimeisen hajautusarvon laskija julkaisee arvon osallistujille, minkä jälkeen arvon oikeellisuus voidaan todentaa muiden toimesta vertaamalla laskijan tuloksia binäärihaulla muiden osallistujien tuloksiin. Todistuksen oikeellisuus voidaan todentaa $log(h)$ kyselyllä. Kun arvo on todennettu, voidaan sitä käyttää satunnaisena arvona.
+
+Protokolla täyttää vaatimukset 1-7. Ongelmana on, että vaikeustason h pitää olla riittävän suuri, jotta kaikki vaatimukset täyttyvät, jolloin generointiin kuluva aika t kasvaa monille käytännön sovelluksille liian suureksi. Osallistujien laitteiston suorituskykyjen erot voivat aiheuttaa ongelmia, sillä hajautusarvon laskeminen on laitteistotasolla helposti optimoitavissa.
+
+Äsken esitelty rekursiivinen funktio on yksinkertainen esimerkki todennettavasta viivefunktiosta (Verifiable Delay Function, VDF). Satunnaislukujen generoimiseen sopivan VDF:n pitäisi aiheuttaa riittävä viive, jotta vaatimukset 1-4 täyttyvät, mutta käytännön sovelluksia varten vahvistamisen pitäisi onnistua mahdollisimman pienessä ajassa. Funktion laskennan laiteoptimoinnista saatavan hyödyn pitäisi olla mahdollisimman pieni. VDF:ää voi käyttää kommitoinnin ja paljastamisen protokollan osana poistamaan viimeisen paljastajan etu \cite{boneh_verifiable_2018}.
+
+\subsection{Muita protokollia}
+Muita mainitsemisen arvoisia protokollia ovat peliteoreettiset sekä homomorfista salausta käyttävät protokollat \cite{simic_review_2020}. 
+
+\section{Tiivistelmä}
+Tekstissä esiteltiin ja määriteltiin satunnaislukujen generoimisen ongelma lohkoketjusovellusten kontekstissa, sekä esiteltiin valittuja protokollia, jotka pyrkivät ratkaisemaan ongelman. Määritellyt vaatimukset täyttävissä protokollissa huomataan olevan lohkoketjusovelluskäyttöä haittaavia tekijöitä, kuten korkea kommunikointikompleksisuus, mahdollisuus laitteistotason optimointiin tai korkea minimisuoritusaika.
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+\end{document}
