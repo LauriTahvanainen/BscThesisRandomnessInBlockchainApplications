@@ -7,6 +7,7 @@ Taulukkoon~\ref{table:results}, on koottu käsiteltyjä menetelmiä, joilla lohk
 \begin{table}[ht]
     \caption{Menetelmiä satunnaisuuden saamiseen lohkoketjusovellukseen}
     \label{table:results}
+    \resizebox{\textwidth}{!}{
     \begin{tabular}{  l  p{4cm}  p{2.5cm} p{2cm} p{3.5cm}}
         \toprule
 
@@ -53,6 +54,7 @@ Homomorfinen salaus
         %\bottomrule
 
     \end{tabular}
+    }
 \end{table}
 
 Yksinkertaisin menetelmä on käyttää pelkkää lohkon tiivistettä. EVM-ympäristössä sen käyttö tapahtuu yhdellä Solidity-kielen funkiokutsulla \cite{noauthor_solidity_nodate}. Vaikka toteutus ei ole turvallinen, niin monelle lohkoketjusovellukselle se voi olla riittävän turvallinen. Menetelmä voi sopia esimerkiksi pienille sovelluksille, jotka eivät käsittele taloudellista arvoa, sekä sovelluksille joissa käyttäjä joutuu suorittamaan jonkinlaisen identifioinnin tai käyttäjien joukko on suljettu ja ennalta tiedossa. Lohkon tiivistettä käyttävät sovellukset hyötyvät siitä, että muutkin sovellukset käyttävät tiivistettä. Tuhansia tiivistettä käyttävää sovellusta ei ole mahdollista manipuloida samanaikaisesti.
@@ -73,6 +75,9 @@ Chainlink VRF ja lohkon tiivisteen käyttäminen ilman VDF:ää eivät vaadi Off
 
 Pelkän lohkon tiivisteen ja Chainlink VRF:n käyttäminen soveltuvat parhaiten reaaliaikaisiin sovelluksiin, joissa satunnaisluku pitää saada nopeasti. Käyttäjien syötteeseen nojaavien protokollien on määriteltävä jokin viive kauan käyttäjien on mahdollista syöttää satunnaisuuttaan. Tämän viiveen määrittely ei ole kuitenkaan helppoa, sillä liian lyhyt viive saattaa rankaista rehellisiä käyttäjiä, joilla on esimerkiksi hidas yhteys. Liian pitkä viive satunnaisuuden tuottamisessa taas ei välttämättä sovellu reaaliaikaiseen sovellukseen. VDF taas itsessään nojaa viiveeseen turvallisen toiminnan takaamiseksi, eikä satunnaislukua saada yhtä nopeasti kuin esimerkiksi lohkon tiivisteen tapauksessa.
 
+ \section{Muu tutkimus ja puutteet}
+ 
+ Hajautetun satunnaisuuden tuottamiseen tarkoitettuja protokollia vertaillaan viimeaikaisissa tutkimuksissa \cite{bhat2021randpiper, bhat2022optrand, schindler_hydrand_2020}. Tutkielmassa ei käyty läpi mainituissa tutkimuksissa esiintyviä menetelmiä, jotka käyttävät BLS \cite{boneh2001short} allekirjoituksia. Tutkielmassa ei esitelty myöskään peliteoreettisia menetelmiä satunnaisuuden tuottamiseen.
 % Off-chain vaatimukset
 
 % Mitkä toteutettavissa PoS ketjussa?
