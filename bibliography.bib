@@ -1,29 +1,61 @@
 
+@incollection{alma9932206893506253,
+	address = {Cambridge ;},
+	title = {Computational complexity : a conceptual perspective},
+	isbn = {0-511-40077-2},
+	abstract = {Complexity theory is a central field of the theoretical foundations of computer science, concerned with the general study of the intrinsic complexity of computational tasks. This book offers a conceptual perspective on complexity theory intended to serve as an introduction for advanced undergraduates and graduates.},
+	booktitle = {Computational complexity : a conceptual perspective},
+	publisher = {Cambridge University Press},
+	author = {Goldreich, Oded.},
+	year = {2008},
+	keywords = {Computational complexity},
+	pages = {283--348},
+}
+
 @article{NguyenCongT2019PCMf,
 	title = {Proof-of-stake consensus mechanisms for future blockchain networks: {Fundamentals}, applications and opportunities},
 	volume = {7},
 	issn = {2169-3536},
 	abstract = {The rapid development of blockchain technology and their numerous emerging applications has received huge attention in recent years. The distributed consensus mechanism is the backbone of a blockchain network. It plays a key role in ensuring the network's security, integrity, and performance. Most current blockchain networks have been deploying the proof-of-work consensus mechanisms, in which the consensus is reached through intensive mining processes. However, this mechanism has several limitations, e.g., energy inefficiency, delay, and vulnerable to security threats. To overcome these problems, a new consensus mechanism has been developed recently, namely proof of stake, which enables to achieve the consensus via proving the stake ownership. This mechanism is expected to become a cutting-edge technology for future blockchain networks. This paper is dedicated to investigating proof-of-stake mechanisms, from fundamental knowledge to advanced proof-of-stake-based protocols along with performance analysis, e.g., energy consumption, delay, and security, as well as their promising applications, particularly in the field of Internet of Vehicles. The formation of stake pools and their effects on the network stake distribution are also analyzed and simulated. The results show that the ratio between the block reward and the total network stake has a significant impact on the decentralization of the network. Technical challenges and potential solutions are also discussed.},
-	language = {english},
 	journal = {IEEE access : practical innovations, open solutions},
 	author = {Nguyen, Cong T and Hoang, Dinh Thai and Nguyen, Diep N and Niyato, Dusit and Nguyen, Huynh Tuong and Dutkiewicz, Eryk},
 	year = {2019},
-	note = {Place: Piscataway
-Publisher: IEEE
-tex.copyright: Copyright The Institute of Electrical and Electronics Engineers, Inc. (IEEE) 2019},
 	keywords = {Blockchain, Cryptography, Delays, Distributed databases, Energy consumption, Games, Hash functions, Internet of Vehicles, Networks, Protocol (computers), Security, and mining process, consensus mechanisms, energy, game theory, proof-of-stake, proof-of-work},
 	pages = {85727--85745},
 }
 
-@article{8760539,
-	title = {A vademecum on blockchain technologies: {When}, which, and how},
-	volume = {21},
-	doi = {10.1109/COMST.2019.2928178},
-	number = {4},
-	journal = {IEEE Communications Surveys Tutorials},
-	author = {Belotti, Marianna and Božić, Nikola and Pujolle, Guy and Secci, Stefano},
-	year = {2019},
-	pages = {3796--3838},
+@inproceedings{MerlinChains,
+	title = {Cryptocurrency smart contracts for distributed consensus of public randomness},
+	doi = {https://doi.org/10.1007/978-3-319-69084-1_31},
+	publisher = {Proceedings of the 19th International Symposium on Stabilization, Safety, and Security of Distributed Systems, Boston, MA},
+	author = {Mell, Peter and Kelsey, John and Shook, James},
+	year = {2017},
+}
+
+@article{hanke_dfinity_2018,
+	title = {{DFINITY} {Technology} {Overview} {Series}, {Consensus} {System}},
+	url = {http://arxiv.org/abs/1805.04548},
+	abstract = {The DFINITY blockchain computer provides a secure, performant and flexible consensus mechanism. At its core, DFINITY contains a decentralized randomness beacon which acts as a verifiable random function (VRF) that produces a stream of outputs over time. The novel technique behind the beacon relies on the existence of a unique-deterministic, non-interactive, DKG-friendly threshold signatures scheme. The only known examples of such a scheme are pairing-based and derived from BLS. The DFINITY blockchain is layered on top of the DFINITY beacon and uses the beacon as its source of randomness for leader selection and leader ranking. A "weight" is attributed to a chain based on the ranks of the leaders who propose the blocks in the chain, and that weight is used to select between competing chains. The DFINITY blockchain is layered on top of the DFINITY beacon and uses the beacon as its source of randomness for leader selection and leader ranking blockchain is further hardened by a notarization process which dramatically improves the time to finality and eliminates the nothing-at-stake and selfish mining attacks. DFINITY consensus algorithm is made to scale through continuous quorum selections driven by the random beacon. In practice, DFINITY achieves block times of a few seconds and transaction finality after only two confirmations. The system gracefully handles temporary losses of network synchrony including network splits, while it is provably secure under synchrony.},
+	urldate = {2022-03-18},
+	author = {Hanke, Timo and Movahedi, Mahnush and Williams, Dominic},
+	month = may,
+	year = {2018},
+	keywords = {Computer Science - Distributed, Parallel, and Cluster Computing},
+}
+
+@inproceedings{gilad_algorand_2017,
+	address = {New York, NY, USA},
+	series = {{SOSP} '17},
+	title = {Algorand: {Scaling} {Byzantine} {Agreements} for {Cryptocurrencies}},
+	isbn = {978-1-4503-5085-3},
+	url = {https://doi.org/10.1145/3132747.3132757},
+	doi = {10.1145/3132747.3132757},
+	abstract = {Algorand is a new cryptocurrency that confirms transactions with latency on the order of a minute while scaling to many users. Algorand ensures that users never have divergent views of confirmed transactions, even if some of the users are malicious and the network is temporarily partitioned. In contrast, existing cryptocurrencies allow for temporary forks and therefore require a long time, on the order of an hour, to confirm transactions with high confidence.Algorand uses a new Byzantine Agreement (BA) protocol to reach consensus among users on the next set of transactions. To scale the consensus to many users, Algorand uses a novel mechanism based on Verifiable Random Functions that allows users to privately check whether they are selected to participate in the BA to agree on the next set of transactions, and to include a proof of their selection in their network messages. In Algorand's BA protocol, users do not keep any private state except for their private keys, which allows Algorand to replace participants immediately after they send a message. This mitigates targeted attacks on chosen participants after their identity is revealed.We implement Algorand and evaluate its performance on 1,000 EC2 virtual machines, simulating up to 500,000 users. Experimental results show that Algorand confirms transactions in under a minute, achieves 125x Bitcoin's throughput, and incurs almost no penalty for scaling to more users.},
+	booktitle = {Proceedings of the 26th {Symposium} on {Operating} {Systems} {Principles}},
+	publisher = {Association for Computing Machinery},
+	author = {Gilad, Yossi and Hemo, Rotem and Micali, Silvio and Vlachos, Georgios and Zeldovich, Nickolai},
+	year = {2017},
+	pages = {51--68},
 }
 
 @article{10.1145/1008908.1008911,
@@ -38,11 +70,33 @@ tex.copyright: Copyright The Institute of Electrical and Electronics Engineers, 
 	author = {Blum, Manuel},
 	month = jan,
 	year = {1983},
-	note = {Number of pages: 5
-Place: New York, NY, USA
-Publisher: Association for Computing Machinery
-tex.issue\_date: Winter-Spring 1983},
 	pages = {23--27},
+}
+
+@inproceedings{boneh2001short,
+	title = {Short signatures from the {Weil} pairing},
+	booktitle = {International conference on the theory and application of cryptology and information security},
+	author = {Boneh, Dan and Lynn, Ben and Shacham, Hovav},
+	year = {2001},
+	pages = {514--532},
+}
+
+@article{wood2014ethereum,
+	title = {Ethereum: {A} secure decentralised generalised transaction ledger},
+	url = {https://ethereum.github.io/yellowpaper/paper.pdf},
+	urldate = {2022-05-08},
+	author = {Wood, Gavin},
+}
+
+@article{8760539,
+	title = {A vademecum on blockchain technologies: {When}, which, and how},
+	volume = {21},
+	doi = {10.1109/COMST.2019.2928178},
+	number = {4},
+	journal = {IEEE Communications Surveys Tutorials},
+	author = {Belotti, Marianna and Božić, Nikola and Pujolle, Guy and Secci, Stefano},
+	year = {2019},
+	pages = {3796--3838},
 }
 
 @misc{noauthor_decentralized_nodate,
@@ -69,15 +123,6 @@ tex.issue\_date: Winter-Spring 1983},
 	abstract = {Total DApps, Daily Active Users, DApps by Category and more...},
 	language = {en-US},
 	urldate = {2022-05-03},
-}
-
-@inproceedings{boneh2001short,
-	title = {Short signatures from the {Weil} pairing},
-	booktitle = {International conference on the theory and application of cryptology and information security},
-	author = {Boneh, Dan and Lynn, Ben and Shacham, Hovav},
-	year = {2001},
-	note = {tex.organization: Springer},
-	pages = {514--532},
 }
 
 @misc{noauthor_proof_nodate,
@@ -278,16 +323,6 @@ tex.issue\_date: Winter-Spring 1983},
 	pages = {572--579},
 }
 
-@inproceedings{MerlinChains,
-	title = {Cryptocurrency smart contracts for distributed consensus of public randomness},
-	doi = {https://doi.org/10.1007/978-3-319-69084-1_31},
-	language = {english},
-	publisher = {Proceedings of the 19th International Symposium on Stabilization, Safety, and Security of Distributed Systems, Boston, MA},
-	author = {Mell, Peter and Kelsey, John and Shook, James},
-	year = {2017},
-	note = {Number: 10616},
-}
-
 @misc{rescorla_transport_2018,
 	title = {The transport layer security ({TLS}) protocol version 1.3},
 	url = {https://www.rfc-editor.org/info/rfc8446},
@@ -433,19 +468,6 @@ tex.copyright: Springer-Verlag Berlin Heidelberg 2004},
 	urldate = {2022-03-18},
 }
 
-@article{hanke_dfinity_2018,
-	title = {{DFINITY} {Technology} {Overview} {Series}, {Consensus} {System}},
-	url = {http://arxiv.org/abs/1805.04548},
-	abstract = {The DFINITY blockchain computer provides a secure, performant and flexible consensus mechanism. At its core, DFINITY contains a decentralized randomness beacon which acts as a verifiable random function (VRF) that produces a stream of outputs over time. The novel technique behind the beacon relies on the existence of a unique-deterministic, non-interactive, DKG-friendly threshold signatures scheme. The only known examples of such a scheme are pairing-based and derived from BLS. The DFINITY blockchain is layered on top of the DFINITY beacon and uses the beacon as its source of randomness for leader selection and leader ranking. A "weight" is attributed to a chain based on the ranks of the leaders who propose the blocks in the chain, and that weight is used to select between competing chains. The DFINITY blockchain is layered on top of the DFINITY beacon and uses the beacon as its source of randomness for leader selection and leader ranking blockchain is further hardened by a notarization process which dramatically improves the time to finality and eliminates the nothing-at-stake and selfish mining attacks. DFINITY consensus algorithm is made to scale through continuous quorum selections driven by the random beacon. In practice, DFINITY achieves block times of a few seconds and transaction finality after only two confirmations. The system gracefully handles temporary losses of network synchrony including network splits, while it is provably secure under synchrony.},
-	urldate = {2022-03-18},
-	journal = {arXiv:1805.04548 [cs]},
-	author = {Hanke, Timo and Movahedi, Mahnush and Williams, Dominic},
-	month = may,
-	year = {2018},
-	note = {arXiv: 1805.04548},
-	keywords = {Computer Science - Distributed, Parallel, and Cluster Computing},
-}
-
 @article{fischer_impossibility_1985,
 	title = {Impossibility of distributed consensus with one faulty process},
 	volume = {32},
@@ -564,22 +586,6 @@ Place: Berkeley, California, USA},
 	note = {Place: New York, NY, USA
 Publisher: Association for Computing Machinery},
 	pages = {792--807},
-}
-
-@inproceedings{gilad_algorand_2017,
-	address = {New York, NY, USA},
-	series = {{SOSP} '17},
-	title = {Algorand: {Scaling} {Byzantine} {Agreements} for {Cryptocurrencies}},
-	isbn = {978-1-4503-5085-3},
-	url = {https://doi.org/10.1145/3132747.3132757},
-	doi = {10.1145/3132747.3132757},
-	abstract = {Algorand is a new cryptocurrency that confirms transactions with latency on the order of a minute while scaling to many users. Algorand ensures that users never have divergent views of confirmed transactions, even if some of the users are malicious and the network is temporarily partitioned. In contrast, existing cryptocurrencies allow for temporary forks and therefore require a long time, on the order of an hour, to confirm transactions with high confidence.Algorand uses a new Byzantine Agreement (BA) protocol to reach consensus among users on the next set of transactions. To scale the consensus to many users, Algorand uses a novel mechanism based on Verifiable Random Functions that allows users to privately check whether they are selected to participate in the BA to agree on the next set of transactions, and to include a proof of their selection in their network messages. In Algorand's BA protocol, users do not keep any private state except for their private keys, which allows Algorand to replace participants immediately after they send a message. This mitigates targeted attacks on chosen participants after their identity is revealed.We implement Algorand and evaluate its performance on 1,000 EC2 virtual machines, simulating up to 500,000 users. Experimental results show that Algorand confirms transactions in under a minute, achieves 125x Bitcoin's throughput, and incurs almost no penalty for scaling to more users.},
-	booktitle = {Proceedings of the 26th {Symposium} on {Operating} {Systems} {Principles}},
-	publisher = {Association for Computing Machinery},
-	author = {Gilad, Yossi and Hemo, Rotem and Micali, Silvio and Vlachos, Georgios and Zeldovich, Nickolai},
-	year = {2017},
-	note = {event-place: Shanghai, China},
-	pages = {51--68},
 }
 
 @article{shamir_how_1979,
